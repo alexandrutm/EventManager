@@ -1,4 +1,4 @@
-package com.example.eventmanager
+package com.altadevapp.eventmanager
 
 import io.flutter.embedding.android.FlutterActivity
 
