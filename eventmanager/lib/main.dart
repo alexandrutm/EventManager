@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:eventmanager/login_page.dart';
 import 'package:flutter/material.dart';
+import 'login_check.dart';
 import 'onboarding_screen.dart';
 import 'login_page.dart';
 
@@ -19,7 +20,7 @@ class EventManager extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       //home: OnBoardingScreen(),
-      home: LoginPage(),
+      home: CheckLogin(),
     );
   }
 }
