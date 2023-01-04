@@ -29,6 +29,13 @@
             {
               "client_id": "700518376829-4ui6o519l0pn3ci5sbd7f2gtgrti22ee.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "700518376829-k5df09gkho8dj5k8oh2jbgd768ca5t97.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.eventmanager"
+              }
             }
           ]
         }

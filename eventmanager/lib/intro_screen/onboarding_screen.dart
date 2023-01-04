@@ -4,7 +4,7 @@ import 'package:eventmanager/intro_screen/intro_page3.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import 'home_page.dart';
+import '../pages/home_page.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);

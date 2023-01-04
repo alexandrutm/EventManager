@@ -1,26 +1,24 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:eventmanager/login_page.dart';
 import 'package:flutter/material.dart';
-import 'login_check.dart';
-import 'onboarding_screen.dart';
-import 'login_page.dart';
+import 'pages/auth_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-Future main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const EventManager());
 }
 
 class EventManager extends StatelessWidget {
-  const EventManager({Key? key}) : super(key: key);
+  const EventManager({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      //home: OnBoardingScreen(),
-      home: CheckLogin(),
+      home: AuthPage(),
     );
   }
 }
