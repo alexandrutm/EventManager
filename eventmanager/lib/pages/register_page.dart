@@ -2,6 +2,7 @@ import 'package:eventmanager/compoments/sqare_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../auth_service.dart';
 import '../compoments/my_button.dart';
 import '../compoments/my_textfield.dart';
 
@@ -170,14 +171,16 @@ class _RegisterPageState extends State<RegisterPage> {
                 // google + apple sign in buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     // google button
-                    SquareTile(imagePath: 'lib/images/google.png'),
+                    SquareTile(
+                        onTap: () => AuthService().signInWithGoogle(),
+                        imagePath: 'lib/images/google.png'),
 
-                    SizedBox(width: 25),
+                    // SizedBox(width: 25),
 
-                    // apple button
-                    SquareTile(imagePath: 'lib/images/apple.png')
+                    // // apple button
+                    // SquareTile(imagePath: 'lib/images/apple.png')
                   ],
                 ),
 
