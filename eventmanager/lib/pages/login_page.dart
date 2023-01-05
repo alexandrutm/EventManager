@@ -75,15 +75,19 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 10),
+                const SizedBox(height: 100),
 
-                // logo
-                const Icon(
-                  Icons.lock,
-                  size: 100,
+                Text(
+                  'Event Manager',
+                  style: TextStyle(
+                      fontFamily: 'Billabong',
+                      color: Colors.grey[900],
+                      fontSize: 52,
+                      fontWeight: FontWeight.bold),
                 ),
 
                 const SizedBox(height: 30),
+
                 // email textfield
                 MyTextField(
                   controller: emailController,
@@ -120,33 +124,12 @@ class _LoginPageState extends State<LoginPage> {
 
                 // sign in button
                 MyButton(
-                  text: "Sign In",
+                  text: "Log In",
                   onTap: signUserIn,
                 ),
 
-                const SizedBox(height: 25),
-                // not a member? register now
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Not a member?',
-                      style: TextStyle(color: Colors.grey[700]),
-                    ),
-                    const SizedBox(width: 4),
-                    GestureDetector(
-                      onTap: widget.onTap,
-                      child: const Text(
-                        'Register now',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 35),
+
                 // or continue with
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -174,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 50),
 
                 // google sign in buttons
                 Row(
@@ -191,6 +174,29 @@ class _LoginPageState extends State<LoginPage> {
                     // SquareTile(imagePath: 'lib/images/apple.png')
                   ],
                 ),
+                const SizedBox(height: 50),
+                // not a member? register now
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Not a member?',
+                      style: TextStyle(color: Colors.grey[700]),
+                    ),
+                    const SizedBox(width: 4),
+                    GestureDetector(
+                      onTap: widget.onTap,
+                      child: const Text(
+                        'Register now',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
               ],
             ),
           ),
