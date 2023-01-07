@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const webScreenSize = 600;
+
 class MyTextField extends StatelessWidget {
   final controller;
   final String hintText;
