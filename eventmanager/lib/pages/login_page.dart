@@ -71,139 +71,62 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 100),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 9),
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Flexible(child: Container(), flex: 2),
 
-                Text(
-                  'Event Manager',
-                  style: TextStyle(
-                      fontFamily: 'Billabong',
-                      color: Colors.grey[900],
-                      fontSize: 52,
-                      fontWeight: FontWeight.bold),
-                ),
+              Text(
+                'Event Manager',
+                style: TextStyle(
+                    fontFamily: 'Billabong',
+                    color: Colors.grey[900],
+                    fontSize: 52,
+                    fontWeight: FontWeight.bold),
+              ),
 
-                const SizedBox(height: 30),
+              const SizedBox(height: 30),
 
-                // email textfield
-                MyTextField(
-                  controller: emailController,
-                  hintText: 'Email',
-                  obscureText: false,
-                ),
+              // email textfield
+              MyTextField(
+                controller: emailController,
+                hintText: 'Email',
+                obscureText: false,
+              ),
 
-                const SizedBox(height: 10),
+              const SizedBox(height: 10),
 
-                // password textfield
-                MyTextField(
-                  controller: passwordController,
-                  hintText: 'Password',
-                  obscureText: true,
-                ),
+              // password textfield
+              MyTextField(
+                controller: passwordController,
+                hintText: 'Password',
+                obscureText: true,
+              ),
 
-                const SizedBox(height: 10),
+              const SizedBox(height: 10),
 
-                // forgot password?
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return ResetPasswordPage();
-                              },
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'Forgot Password?',
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 25),
-
-                // sign in button
-                MyButton(
-                  text: "Log In",
-                  onTap: signUserIn,
-                ),
-
-                const SizedBox(height: 35),
-
-                // or continue with
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Divider(
-                          thickness: 0.5,
-                          color: Colors.grey[400],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text(
-                          'Or continue with',
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                      ),
-                      Expanded(
-                        child: Divider(
-                          thickness: 0.5,
-                          color: Colors.grey[400],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 50),
-
-                // google sign in buttons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              // forgot password?
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    // google button
-                    SquareTile(
-                        onTap: () => AuthService().signInWithGoogle(),
-                        imagePath: 'lib/images/google.png'),
-
-                    // SizedBox(width: 25),
-
-                    // // apple button
-                    // SquareTile(imagePath: 'lib/images/apple.png')
-                  ],
-                ),
-                const SizedBox(height: 50),
-                // not a member? register now
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Not a member?',
-                      style: TextStyle(color: Colors.grey[700]),
-                    ),
-                    const SizedBox(width: 4),
                     GestureDetector(
-                      onTap: widget.onTap,
-                      child: const Text(
-                        'Register now',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ResetPasswordPage();
+                            },
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Forgot Password?',
                         style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,
@@ -212,9 +135,82 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
-              ],
-            ),
+              ),
+
+              const SizedBox(height: 25),
+
+              // sign in button
+              MyButton(
+                text: "Log In",
+                onTap: signUserIn,
+              ),
+
+              const SizedBox(height: 40),
+
+              // or continue with
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        thickness: 0.5,
+                        color: Colors.grey[400],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Text(
+                        'Or continue with',
+                        style: TextStyle(color: Colors.grey[700]),
+                      ),
+                    ),
+                    Expanded(
+                      child: Divider(
+                        thickness: 0.5,
+                        color: Colors.grey[400],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 25),
+
+              // google sign in buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // google button
+                  SquareTile(
+                      onTap: () => AuthService().signInWithGoogle(),
+                      imagePath: 'lib/images/google.png'),
+                ],
+              ),
+              const SizedBox(height: 25),
+              // not a member? register now
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Not a member?',
+                    style: TextStyle(color: Colors.grey[700]),
+                  ),
+                  const SizedBox(width: 4),
+                  GestureDetector(
+                    onTap: widget.onTap,
+                    child: const Text(
+                      'Register now',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 10),
+            ],
           ),
         ),
       ),
