@@ -1,10 +1,10 @@
-import 'package:eventmanager/compoments/sqare_tile.dart';
+import 'package:eventmanager/components/sqare_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../auth_service.dart';
-import '../compoments/my_button.dart';
-import '../compoments/my_textfield.dart';
+import '../components/my_button.dart';
+import '../components/my_textfield.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
