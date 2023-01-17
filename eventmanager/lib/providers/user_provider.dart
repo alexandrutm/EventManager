@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:eventmanager/models/user.dart';
-import 'package:eventmanager/resources/auth_methods.dart';
+import 'package:eventmanager/providers/auth_methods.dart';
 
 class UserProvider with ChangeNotifier {
   User? _user;

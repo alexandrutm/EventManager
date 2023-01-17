@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:eventmanager/resources/auth_methods.dart';
+import 'package:eventmanager/providers/auth_methods.dart';
 import 'package:eventmanager/resources/firestore_methods.dart';
 import 'package:eventmanager/pages/login_page.dart';
 import 'package:eventmanager/utils/colors.dart';
@@ -132,10 +132,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               Navigator.of(context)
                                                   .pushReplacement(
                                                 MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        LoginPage(
-                                                          onTap: togglePages,
-                                                        )),
+                                                  builder: (context) =>
+                                                      const LoginScreen(),
+                                                ),
                                               );
                                             },
                                           )
