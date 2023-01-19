@@ -20,6 +20,7 @@ class TextFieldInput extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: TextField(
+        style: const TextStyle(color: primaryColor),
         controller: textEditingController,
         obscureText: obscureText,
         keyboardType: textInputType,

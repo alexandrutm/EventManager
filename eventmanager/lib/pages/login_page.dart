@@ -77,18 +77,18 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Flexible(child: Container(), flex: 2),
+              Flexible(flex: 2, child: Container()),
 
-              Text(
+              const Text(
                 'Event Manager',
                 style: TextStyle(
                     fontFamily: 'Billabong',
-                    color: Colors.grey[900],
+                    color: primaryColor,
                     fontSize: 52,
                     fontWeight: FontWeight.bold),
               ),
 
-              Flexible(child: Container(), flex: 1),
+              Flexible(flex: 1, child: Container()),
 
               // email textfield
               TextFieldInput(
@@ -138,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
 
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
 
               MyButton(onTap: loginUser, text: "Log in", isLoading: _isLoading),
 
@@ -157,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.0),
                       child: Text(
-                        'Or continue with',
+                        'Or',
                         style: TextStyle(color: primaryColor),
                       ),
                     ),
@@ -248,7 +248,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
               ),
-
               Flexible(child: Container(), flex: 1),
               const SizedBox(height: 25),
               // not a member? register now
