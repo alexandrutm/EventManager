@@ -1,6 +1,7 @@
 import 'dart:typed_data';
+import 'package:eventmanager/components/TextFieldInput.dart';
+import 'package:eventmanager/components/my_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:eventmanager/providers/auth_methods.dart';
 import 'package:eventmanager/responsive/mobile_screen_layout.dart';
@@ -10,7 +11,6 @@ import 'package:eventmanager/pages/login_page.dart';
 import 'package:eventmanager/utils/colors.dart';
 import 'package:eventmanager/utils/global_variable.dart';
 import 'package:eventmanager/utils/utils.dart';
-import 'package:eventmanager/components/text_field_input.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -23,7 +23,6 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _bioController = TextEditingController();
   bool _isLoading = false;
   Uint8List? _image;
 
@@ -46,7 +45,7 @@ class _SignupScreenState extends State<SignupScreen> {
         email: _emailController.text,
         password: _passwordController.text,
         username: _usernameController.text,
-        bio: _bioController.text,
+        bio: "",
         file: _image!);
     // if string returned is sucess, user has been created
     if (res == "success") {
@@ -81,11 +80,17 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
+      backgroundColor:
+          width > webScreenSize ? webBackgroundColor : mobileBackgroundColor,
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
+          padding: width > webScreenSize
+              ? EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width / 3)
+              : const EdgeInsets.symmetric(horizontal: 5),
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -94,10 +99,13 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: Container(),
                 flex: 2,
               ),
-              SvgPicture.asset(
-                'assets/ic_instagram.svg',
-                color: primaryColor,
-                height: 64,
+              Text(
+                'Event Manager',
+                style: TextStyle(
+                    fontFamily: 'Billabong',
+                    color: Colors.grey[900],
+                    fontSize: 52,
+                    fontWeight: FontWeight.bold),
               ),
               const SizedBox(
                 height: 64,
@@ -127,15 +135,15 @@ class _SignupScreenState extends State<SignupScreen> {
                 ],
               ),
               const SizedBox(
-                height: 24,
+                height: 25,
               ),
               TextFieldInput(
-                hintText: 'Enter your username',
+                hintText: 'Enter your name',
                 textInputType: TextInputType.text,
                 textEditingController: _usernameController,
               ),
               const SizedBox(
-                height: 24,
+                height: 15,
               ),
               TextFieldInput(
                 hintText: 'Enter your email',
@@ -143,48 +151,21 @@ class _SignupScreenState extends State<SignupScreen> {
                 textEditingController: _emailController,
               ),
               const SizedBox(
-                height: 24,
+                height: 15,
               ),
               TextFieldInput(
                 hintText: 'Enter your password',
                 textInputType: TextInputType.text,
                 textEditingController: _passwordController,
-                isPass: true,
+                obscureText: true,
               ),
               const SizedBox(
-                height: 24,
+                height: 15,
               ),
-              TextFieldInput(
-                hintText: 'Enter your bio',
-                textInputType: TextInputType.text,
-                textEditingController: _bioController,
-              ),
+              MyButton(
+                  onTap: signUpUser, text: "Sign up", isLoading: _isLoading),
               const SizedBox(
-                height: 24,
-              ),
-              InkWell(
-                child: Container(
-                  child: !_isLoading
-                      ? const Text(
-                          'Sign up',
-                        )
-                      : const CircularProgressIndicator(
-                          color: primaryColor,
-                        ),
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  decoration: const ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                    ),
-                    color: blueColor,
-                  ),
-                ),
-                onTap: signUpUser,
-              ),
-              const SizedBox(
-                height: 12,
+                height: 15,
               ),
               Flexible(
                 child: Container(),
@@ -194,10 +175,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
                     child: const Text(
                       'Already have an account?',
                     ),
-                    padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
                   GestureDetector(
                     onTap: () => Navigator.of(context).push(
@@ -206,13 +187,13 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     ),
                     child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                       child: const Text(
                         ' Login.',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 8),
                     ),
                   ),
                 ],

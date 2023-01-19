@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:eventmanager/models/user.dart' as model;
 import 'package:eventmanager/resources/storage_methods.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -16,6 +18,22 @@ class AuthMethods {
         await _firestore.collection('users').doc(currentUser.uid).get();
 
     return model.User.fromSnap(documentSnapshot);
+  }
+
+  void addUserToDB(String? aFullName, String? aUid, String? aPhotoUrl,
+      String? aEmail, String aAboutUser, List aFollowers, List aFollows) async {
+    model.User _user = model.User(
+      username: aFullName.toString(),
+      uid: aUid.toString(),
+      photoUrl: aPhotoUrl.toString(),
+      email: aEmail.toString(),
+      bio: aAboutUser,
+      followers: aFollowers,
+      following: aFollows,
+    );
+
+    // adding user in our database
+    await _firestore.collection("users").doc(aUid).set(_user.toJson());
   }
 
   // Signing Up User
@@ -42,21 +60,7 @@ class AuthMethods {
         String photoUrl = await StorageMethods()
             .uploadImageToStorage('profilePictures', file, false);
 
-        model.User _user = model.User(
-          username: username,
-          uid: cred.user!.uid,
-          photoUrl: photoUrl,
-          email: email,
-          bio: bio,
-          followers: [],
-          following: [],
-        );
-
-        // adding user in our database
-        await _firestore
-            .collection("users")
-            .doc(cred.user!.uid)
-            .set(_user.toJson());
+        addUserToDB(username, cred.user!.uid, photoUrl, email, bio, [], []);
 
         res = "success";
       } else {
@@ -93,5 +97,61 @@ class AuthMethods {
 
   Future<void> signOut() async {
     await _auth.signOut();
+  }
+
+  Future<String> signInWithGoogle() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    final UserCredential firebaseUser;
+
+    if (kIsWeb) {
+      GoogleAuthProvider authProvider = GoogleAuthProvider();
+
+      try {
+        firebaseUser = await auth.signInWithPopup(authProvider);
+
+        addUserToDB(firebaseUser.user!.displayName, firebaseUser.user!.uid,
+            firebaseUser.user!.photoURL, firebaseUser.user!.email, "", [], []);
+        return "succes";
+      } catch (e) {
+        print(e);
+      }
+    } else {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+
+      final GoogleSignInAccount? googleSignInAccount =
+          await googleSignIn.signIn();
+
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
+
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
+
+        try {
+          firebaseUser = await auth.signInWithCredential(credential);
+
+          addUserToDB(
+              firebaseUser.user!.displayName,
+              firebaseUser.user!.uid,
+              firebaseUser.user!.photoURL,
+              firebaseUser.user!.email,
+              "", [], []);
+
+          return "succes";
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'account-exists-with-different-credential') {
+            // ...
+          } else if (e.code == 'invalid-credential') {
+            // ...
+          }
+        } catch (e) {
+          // ...
+        }
+      }
+    }
+    return "userdata";
   }
 }

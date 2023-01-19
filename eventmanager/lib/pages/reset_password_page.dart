@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../components/my_button.dart';
-import '../components/my_textfield.dart';
+import '../components/TextFieldInput.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({super.key});
@@ -61,8 +61,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           const SizedBox(height: 20),
 
           // email textfield
-          MyTextField(
-            controller: emailController,
+          TextFieldInput(
+            textInputType: TextInputType.emailAddress,
+            textEditingController: emailController,
             hintText: 'Email',
             obscureText: false,
           ),
@@ -72,6 +73,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           MyButton(
             text: "Reset Password",
             onTap: resetPassword,
+            isLoading: false,
           ),
         ],
       ),

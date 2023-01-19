@@ -31,7 +31,7 @@ class EventManager extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Instagram Clone',
+        title: 'EventManager',
         theme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: mobileBackgroundColor,
         ),
@@ -40,17 +40,17 @@ class EventManager extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
               //Checking if the snapshot has any data or not
-              // if (snapshot.hasData) {
-              //   // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
-              //   return const ResponsiveLayout(
-              //     mobileScreenLayout: MobileScreenLayout(),
-              //     webScreenLayout: WebScreenLayout(),
-              //   );
-              // } else if (snapshot.hasError) {
-              //   return Center(
-              //     child: Text('${snapshot.error}'),
-              //   );
-              // }
+              if (snapshot.hasData) {
+                // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
+                return const ResponsiveLayout(
+                  mobileScreenLayout: MobileScreenLayout(),
+                  webScreenLayout: WebScreenLayout(),
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text('${snapshot.error}'),
+                );
+              }
             }
 
             // means connection to future hasnt been made yet
