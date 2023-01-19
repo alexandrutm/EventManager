@@ -23,9 +23,12 @@ class _SearchScreenState extends State<SearchScreen> {
         backgroundColor: mobileBackgroundColor,
         title: Form(
           child: TextFormField(
+            style: TextStyle(color: primaryColor),
             controller: searchController,
-            decoration:
-                const InputDecoration(labelText: 'Search for a user...'),
+            decoration: const InputDecoration(
+              hintText: 'Search for a user...',
+              hintStyle: TextStyle(color: greyShadeTextColor),
+            ),
             onFieldSubmitted: (String _) {
               setState(() {
                 isShowUsers = true;

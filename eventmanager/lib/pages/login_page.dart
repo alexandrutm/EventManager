@@ -140,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               const SizedBox(height: 10),
 
-              MyButton(onTap: loginUser, text: "Log in", isLoading: _isLoading),
+              MyButton(onTap: loginUser, text: "Login", isLoading: _isLoading),
 
               Flexible(child: Container(), flex: 1),
               // or continue with

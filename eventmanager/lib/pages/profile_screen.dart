@@ -83,6 +83,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               backgroundColor: mobileBackgroundColor,
               title: Text(
                 userData['username'],
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: primaryColor,
+                ),
               ),
               centerTitle: false,
             ),
@@ -110,9 +114,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    buildStatColumn(postLen, "posts"),
-                                    buildStatColumn(followers, "followers"),
-                                    buildStatColumn(following, "following"),
+                                    buildStatColumn(postLen, "Events"),
+                                    buildStatColumn(followers, "Followers"),
+                                    buildStatColumn(following, "Following"),
                                   ],
                                 ),
                                 Row(
@@ -191,8 +195,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         child: Text(
                           userData['username'],
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
+                            color: primaryColor,
                           ),
                         ),
                       ),
@@ -260,6 +265,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
+            color: primaryColor,
           ),
         ),
         Container(
@@ -268,8 +274,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             label,
             style: const TextStyle(
               fontSize: 15,
-              fontWeight: FontWeight.w400,
-              color: Colors.grey,
+              fontWeight: FontWeight.w500,
+              color: primaryColor,
             ),
           ),
         ),

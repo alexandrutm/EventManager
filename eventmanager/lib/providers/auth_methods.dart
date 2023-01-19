@@ -111,7 +111,7 @@ class AuthMethods {
 
         addUserToDB(firebaseUser.user!.displayName, firebaseUser.user!.uid,
             firebaseUser.user!.photoURL, firebaseUser.user!.email, "", [], []);
-        return "succes";
+        return "success";
       } catch (e) {
         print(e);
       }
@@ -140,7 +140,7 @@ class AuthMethods {
               firebaseUser.user!.email,
               "", [], []);
 
-          return "succes";
+          return "success";
         } on FirebaseAuthException catch (e) {
           if (e.code == 'account-exists-with-different-credential') {
             // ...

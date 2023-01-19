@@ -110,7 +110,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       : const CircleAvatar(
                           radius: 64,
                           backgroundImage: NetworkImage(
-                              'https://i.stack.imgur.com/l60Hf.png'),
+                              'https://i.stack.imgur.com/34AD2.jpg'),
                           backgroundColor: Colors.red,
                         ),
                   Positioned(
@@ -123,11 +123,9 @@ class _SignupScreenState extends State<SignupScreen> {
                   )
                 ],
               ),
-              const SizedBox(
-                height: 25,
-              ),
+              Flexible(flex: 1, child: Container()),
               TextFieldInput(
-                hintText: 'Enter your name',
+                hintText: 'Full name',
                 textInputType: TextInputType.text,
                 textEditingController: _usernameController,
               ),
@@ -135,7 +133,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 height: 15,
               ),
               TextFieldInput(
-                hintText: 'Enter your email',
+                hintText: 'Email',
                 textInputType: TextInputType.emailAddress,
                 textEditingController: _emailController,
               ),
@@ -143,7 +141,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 height: 15,
               ),
               TextFieldInput(
-                hintText: 'Enter your password',
+                hintText: 'Password',
                 textInputType: TextInputType.text,
                 textEditingController: _passwordController,
                 obscureText: true,
@@ -167,6 +165,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     child: const Text(
                       'Already have an account?',
+                      style: TextStyle(
+                        color: primaryColor,
+                      ),
                     ),
                   ),
                   GestureDetector(
@@ -180,6 +181,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: const Text(
                         ' Login.',
                         style: TextStyle(
+                          color: blueLinkColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
