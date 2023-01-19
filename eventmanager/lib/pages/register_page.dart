@@ -82,7 +82,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       backgroundColor:
           width > webScreenSize ? webBackgroundColor : mobileBackgroundColor,
       body: SafeArea(
@@ -98,17 +98,6 @@ class _SignupScreenState extends State<SignupScreen> {
               Flexible(
                 child: Container(),
                 flex: 2,
-              ),
-              Text(
-                'Event Manager',
-                style: TextStyle(
-                    fontFamily: 'Billabong',
-                    color: Colors.grey[900],
-                    fontSize: 52,
-                    fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 64,
               ),
               Stack(
                 children: [
