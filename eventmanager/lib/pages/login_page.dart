@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontWeight: FontWeight.bold),
               ),
 
-              const SizedBox(height: 30),
+              Flexible(child: Container(), flex: 1),
 
               // email textfield
               TextFieldInput(
@@ -142,8 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               MyButton(onTap: loginUser, text: "Log in", isLoading: _isLoading),
 
-              const SizedBox(height: 15),
-
+              Flexible(child: Container(), flex: 1),
               // or continue with
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
