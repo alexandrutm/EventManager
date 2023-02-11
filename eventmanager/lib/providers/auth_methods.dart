@@ -33,7 +33,7 @@ class AuthMethods {
     );
 
     // adding user in our database
-    await _firestore.collection("users").doc(aUid).set(_user.toJson());
+    _firestore.collection("users").doc(aUid).set(user.toJson());
   }
 
   // Signing Up User
