@@ -4,17 +4,19 @@ class User {
   final String email;
   final String uid;
   final String photoUrl;
-  final String username;
+  final String mFirstName;
+  final String mLastName;
   final String bio;
   final List followers;
   final List following;
 
   const User(
-      {required this.username,
+      {required this.mFirstName,
+      required this.mLastName,
       required this.uid,
-      required this.photoUrl,
       required this.email,
-      required this.bio,
+      this.photoUrl = 'https://i.stack.imgur.com/34AD2.jpg',
+      this.bio = "About you",
       required this.followers,
       required this.following});
 
@@ -22,7 +24,8 @@ class User {
     var snapshot = snap.data() as Map<String, dynamic>;
 
     return User(
-      username: snapshot["username"],
+      mFirstName: snapshot["firstname"],
+      mLastName: snapshot["lastname"],
       uid: snapshot["uid"],
       email: snapshot["email"],
       photoUrl: snapshot["photoUrl"],
@@ -33,7 +36,8 @@ class User {
   }
 
   Map<String, dynamic> toJson() => {
-        "username": username,
+        "firstname": mFirstName,
+        "lastname": mLastName,
         "uid": uid,
         "email": email,
         "photoUrl": photoUrl,

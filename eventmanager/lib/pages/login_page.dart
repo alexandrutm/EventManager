@@ -185,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           backgroundColor: MaterialStateProperty.all(fillColor),
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(40),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                           ),
                         ),
@@ -223,7 +223,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           });
                         },
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                          padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -258,6 +258,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     'Not a member?',
                     style: TextStyle(
                       color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(width: 4),
@@ -271,6 +273,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       'Register now',
                       style: TextStyle(
                         color: blueLinkColor,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

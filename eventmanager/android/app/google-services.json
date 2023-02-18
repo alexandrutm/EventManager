@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "700518376829-0qnejv5opk8slcsctvh9bi2q9kqqvehe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.altadevapp.eventmanager",
+            "certificate_hash": "47dd001975ec5b9291ed382034c4a9523ab89f6a"
+          }
+        },
+        {
           "client_id": "700518376829-4ui6o519l0pn3ci5sbd7f2gtgrti22ee.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -44,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     try {
       var userSnap = await FirebaseFirestore.instance
           .collection('users')
-          .doc(widget.uid)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .get();
 
       // get post lENGTH
@@ -80,9 +80,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           )
         : Scaffold(
             appBar: AppBar(
+              automaticallyImplyLeading: false,
               backgroundColor: mobileBackgroundColor,
               title: Text(
-                userData['username'],
+                userData['firstname'] + " " + userData['lastname'],
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: primaryColor,
@@ -194,7 +195,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           top: 15,
                         ),
                         child: Text(
-                          userData['username'],
+                          userData['firstname'],
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: primaryColor,

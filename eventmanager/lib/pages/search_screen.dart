@@ -20,6 +20,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: mobileBackgroundColor,
         title: Form(
           child: TextFormField(
@@ -43,7 +44,7 @@ class _SearchScreenState extends State<SearchScreen> {
               future: FirebaseFirestore.instance
                   .collection('users')
                   .where(
-                    'username',
+                    'firstname',
                     isGreaterThanOrEqualTo: searchController.text,
                   )
                   .get(),
@@ -72,7 +73,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           radius: 16,
                         ),
                         title: Text(
-                          (snapshot.data! as dynamic).docs[index]['username'],
+                          (snapshot.data! as dynamic).docs[index]['firstname'],
                         ),
                       ),
                     );

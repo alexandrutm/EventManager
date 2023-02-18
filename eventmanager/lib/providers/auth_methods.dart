@@ -20,10 +20,18 @@ class AuthMethods {
     return model.User.fromSnap(documentSnapshot);
   }
 
-  void addUserToDB(String? aFullName, String? aUid, String? aPhotoUrl,
-      String? aEmail, String aAboutUser, List aFollowers, List aFollows) async {
-    model.User _user = model.User(
-      username: aFullName.toString(),
+  void AddUserToDB(
+      String? aFirstName,
+      String? aLastName,
+      String? aUid,
+      String? aPhotoUrl,
+      String? aEmail,
+      String aAboutUser,
+      List aFollowers,
+      List aFollows) async {
+    model.User user = model.User(
+      mFirstName: aFirstName.toString(),
+      mLastName: aLastName.toString(),
       uid: aUid.toString(),
       photoUrl: aPhotoUrl.toString(),
       email: aEmail.toString(),
@@ -37,20 +45,17 @@ class AuthMethods {
   }
 
   // Signing Up User
-  Future<String> signUpUser({
+  Future<String> RegisterUser({
     required String email,
     required String password,
-    required String username,
+    required String firstname,
+    required String lastname,
     required String bio,
     required Uint8List file,
   }) async {
     String res = "Some error Occurred";
     try {
-      if (email.isNotEmpty ||
-          password.isNotEmpty ||
-          username.isNotEmpty ||
-          bio.isNotEmpty ||
-          file != null) {
+      if (email.isNotEmpty || password.isNotEmpty) {
         // registering user in auth with email and password
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
           email: email,
@@ -60,7 +65,8 @@ class AuthMethods {
         String photoUrl = await StorageMethods()
             .uploadImageToStorage('profilePictures', file, false);
 
-        addUserToDB(username, cred.user!.uid, photoUrl, email, bio, [], []);
+        AddUserToDB(
+            firstname, lastname, cred.user!.uid, photoUrl, email, bio, [], []);
 
         res = "success";
       } else {
@@ -109,7 +115,9 @@ class AuthMethods {
       try {
         firebaseUser = await auth.signInWithPopup(authProvider);
 
-        addUserToDB(firebaseUser.user!.displayName, firebaseUser.user!.uid,
+        List<String> spiltName = firebaseUser.user!.displayName!.split(" ");
+
+        AddUserToDB(spiltName.first, spiltName.last, firebaseUser.user!.uid,
             firebaseUser.user!.photoURL, firebaseUser.user!.email, "", [], []);
         return "success";
       } catch (e) {
@@ -133,8 +141,11 @@ class AuthMethods {
         try {
           firebaseUser = await auth.signInWithCredential(credential);
 
-          addUserToDB(
-              firebaseUser.user!.displayName,
+          List<String> spiltName = firebaseUser.user!.displayName!.split(" ");
+
+          AddUserToDB(
+              spiltName.first,
+              spiltName.last,
               firebaseUser.user!.uid,
               firebaseUser.user!.photoURL,
               firebaseUser.user!.email,

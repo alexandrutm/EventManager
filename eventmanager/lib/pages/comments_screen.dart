@@ -20,13 +20,14 @@ class _CommentsScreenState extends State<CommentsScreen> {
   final TextEditingController commentEditingController =
       TextEditingController();
 
-  void postComment(String uid, String name, String profilePic) async {
+  void postComment(String uid, String aFirstName, String aLastName,
+      String profilePic) async {
     try {
       String res = await FireStoreMethods().postComment(
         widget.postId,
         commentEditingController.text,
         uid,
-        name,
+        aFirstName,
         profilePic,
       );
 
@@ -50,6 +51,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: mobileBackgroundColor,
         title: const Text(
           'Comments',
@@ -97,7 +99,8 @@ class _CommentsScreenState extends State<CommentsScreen> {
                   child: TextField(
                     controller: commentEditingController,
                     decoration: InputDecoration(
-                      hintText: 'Comment as ${user.username}',
+                      hintText:
+                          'Comment as ${'${user.mFirstName} ${user.mFirstName}'}',
                       border: InputBorder.none,
                     ),
                   ),
@@ -106,7 +109,8 @@ class _CommentsScreenState extends State<CommentsScreen> {
               InkWell(
                 onTap: () => postComment(
                   user.uid,
-                  user.username,
+                  user.mFirstName,
+                  user.mLastName,
                   user.photoUrl,
                 ),
                 child: Container(

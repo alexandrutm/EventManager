@@ -20,7 +20,8 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _firstnameController = TextEditingController();
+  final TextEditingController _lastnameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
@@ -31,7 +32,8 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _usernameController.dispose();
+    _firstnameController.dispose();
+    _lastnameController.dispose();
   }
 
   void signUpUser() async {
@@ -41,10 +43,11 @@ class _SignupScreenState extends State<SignupScreen> {
     });
 
     // signup user using our authmethodds
-    String res = await AuthMethods().signUpUser(
+    String res = await AuthMethods().RegisterUser(
         email: _emailController.text,
         password: _passwordController.text,
-        username: _usernameController.text,
+        firstname: _firstnameController.text,
+        lastname: _lastnameController.text,
         bio: "",
         file: _image!);
     // if string returned is sucess, user has been created
@@ -125,9 +128,17 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               Flexible(flex: 1, child: Container()),
               TextFieldInput(
-                hintText: 'Full name',
+                hintText: 'First name',
                 textInputType: TextInputType.text,
-                textEditingController: _usernameController,
+                textEditingController: _firstnameController,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              TextFieldInput(
+                hintText: 'Last name',
+                textInputType: TextInputType.text,
+                textEditingController: _lastnameController,
               ),
               const SizedBox(
                 height: 15,
@@ -167,6 +178,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       'Already have an account?',
                       style: TextStyle(
                         color: primaryColor,
+                        fontSize: 15,
                       ),
                     ),
                   ),

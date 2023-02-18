@@ -25,6 +25,7 @@ class _FeedScreenState extends State<FeedScreen> {
       appBar: width > webScreenSize
           ? null
           : AppBar(
+              automaticallyImplyLeading: false,
               backgroundColor: mobileBackgroundColor,
               centerTitle: false,
               title: const Text(

@@ -124,6 +124,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
           )
         : Scaffold(
             appBar: AppBar(
+              automaticallyImplyLeading: false,
               backgroundColor: mobileBackgroundColor,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
@@ -137,7 +138,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 TextButton(
                   onPressed: () => postImage(
                     userProvider.getUser.uid,
-                    userProvider.getUser.username,
+                    userProvider.getUser.mFirstName,
                     userProvider.getUser.photoUrl,
                   ),
                   child: const Text(
