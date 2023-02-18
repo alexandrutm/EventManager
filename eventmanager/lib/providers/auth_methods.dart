@@ -8,7 +8,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // get user details
   Future<model.User> getUserDetails() async {
@@ -79,24 +79,25 @@ class AuthMethods {
   }
 
   // logging in user
-  Future<String> loginUser({
+  static Future<String> loginUser({
     required String email,
     required String password,
   }) async {
     String res = "Some error Occurred";
+
+    // logging in user with email and password
     try {
-      if (email.isNotEmpty || password.isNotEmpty) {
-        // logging in user with email and password
-        await _auth.signInWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
-        res = "success";
-      } else {
-        res = "Please enter all the fields";
+      await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      res = "success";
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        res = "No user found for that email.";
+      } else if (e.code == 'wrong-password') {
+        res = "Wrong password provided for that user.";
       }
-    } catch (err) {
-      return err.toString();
     }
     return res;
   }

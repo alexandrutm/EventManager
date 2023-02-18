@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _isLoading = true;
     });
-    String res = await AuthMethods().loginUser(
+    String res = await AuthMethods.loginUser(
         email: _emailController.text, password: _passwordController.text);
     if (res == 'success') {
       Navigator.of(context).pushAndRemoveUntil(
@@ -140,6 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               const SizedBox(height: 10),
 
+//      if (email.isNotEmpty || password.isNotEmpty) {
               MyButton(onTap: loginUser, text: "Login", isLoading: _isLoading),
 
               Flexible(child: Container(), flex: 1),

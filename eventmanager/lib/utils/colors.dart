@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const mobileBackgroundColor = Color.fromARGB(255, 185, 191, 200);
 const webBackgroundColor = Color.fromARGB(255, 185, 191, 200);
-const focusedBorderColor = Color.fromRGBO(0, 149, 246, 1);
+const focusedBorderColor = Color.fromARGB(255, 0, 87, 241);
 const mobileSearchColor = Color.fromARGB(255, 203, 188, 188);
 const blueLinkColor = Color.fromARGB(255, 0, 87, 241);
 const primaryColor = Colors.black87;
