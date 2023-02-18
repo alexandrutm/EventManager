@@ -18,12 +18,32 @@ class MyButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: CustomTheme.bkgGradientStart,
+              offset: Offset(1.0, 6.0),
+              blurRadius: 20.0,
+            ),
+            BoxShadow(
+              color: CustomTheme.bkgGradientEnd,
+              offset: Offset(1.0, 6.0),
+              blurRadius: 20.0,
+            ),
+          ],
+          gradient: LinearGradient(
+              colors: <Color>[
+                CustomTheme.bkgGradientStart,
+                CustomTheme.bkgGradientStart
+              ],
+              begin: FractionalOffset(0.2, 0.2),
+              end: FractionalOffset(1.0, 1.0),
+              stops: <double>[0.0, 1.0],
+              tileMode: TileMode.clamp),
+        ),
         padding: const EdgeInsets.all(20),
         margin: const EdgeInsets.symmetric(horizontal: 20),
-        decoration: BoxDecoration(
-          color: Colors.blue,
-          borderRadius: BorderRadius.circular(20),
-        ),
         child: Center(
           child: !isLoading
               ? Text(
@@ -35,7 +55,7 @@ class MyButton extends StatelessWidget {
                   ),
                 )
               : const CircularProgressIndicator(
-                  color: primaryColor,
+                  color: primaryColorBlack,
                 ),
         ),
       ),

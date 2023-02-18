@@ -24,7 +24,7 @@ class _SearchScreenState extends State<SearchScreen> {
         backgroundColor: mobileBackgroundColor,
         title: Form(
           child: TextFormField(
-            style: TextStyle(color: primaryColor),
+            style: TextStyle(color: primaryColorBlack),
             controller: searchController,
             decoration: const InputDecoration(
               hintText: 'Search for a user...',

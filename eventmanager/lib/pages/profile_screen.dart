@@ -86,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 userData['firstname'] + " " + userData['lastname'],
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: primaryColor,
+                  color: primaryColorBlack,
                 ),
               ),
               centerTitle: false,
@@ -130,7 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             text: 'Sign Out',
                                             backgroundColor:
                                                 mobileBackgroundColor,
-                                            textColor: primaryColor,
+                                            textColor: primaryColorBlack,
                                             borderColor: Colors.grey,
                                             function: () async {
                                               await AuthMethods().signOut();
@@ -198,7 +198,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           userData['firstname'],
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: primaryColor,
+                            color: primaryColorBlack,
                           ),
                         ),
                       ),
@@ -266,7 +266,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: primaryColor,
+            color: primaryColorBlack,
           ),
         ),
         Container(
@@ -276,7 +276,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
-              color: primaryColor,
+              color: primaryColorBlack,
             ),
           ),
         ),

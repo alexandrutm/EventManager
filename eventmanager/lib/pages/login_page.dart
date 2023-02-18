@@ -64,230 +64,254 @@ class _LoginScreenState extends State<LoginScreen> {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor:
-          width > webScreenSize ? webBackgroundColor : mobileBackgroundColor,
-      body: SafeArea(
-        child: Container(
-          padding: width > webScreenSize
-              ? EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width / 3)
-              : const EdgeInsets.symmetric(horizontal: 5),
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Flexible(flex: 2, child: Container()),
-
-              const Text(
-                'Event Manager',
-                style: TextStyle(
-                    fontFamily: 'Billabong',
-                    color: primaryColor,
-                    fontSize: 52,
-                    fontWeight: FontWeight.bold),
+      body: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).requestFocus(FocusNode());
+            },
+            child: Container(
+              padding: width > webScreenSize
+                  ? EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width / 3)
+                  : const EdgeInsets.symmetric(horizontal: 5),
+              decoration: const BoxDecoration(
+                gradient: backgroundGradientColor,
               ),
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(top: 150.0),
+                    child: Text(
+                      'Event Manager',
+                      style: TextStyle(
+                          fontFamily: 'Billabong',
+                          color: primaryColorBlack,
+                          fontSize: 52,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
 
-              Flexible(flex: 1, child: Container()),
+                  // email textfield
+                  Padding(
+                    padding: EdgeInsets.only(top: 100.0),
+                    child: TextFieldInput(
+                      textInputType: TextInputType.emailAddress,
+                      textEditingController: _emailController,
+                      hintText: 'Email',
+                    ),
+                  ),
+                  // password textfield
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: TextFieldInput(
+                      textInputType: TextInputType.text,
+                      textEditingController: _passwordController,
+                      hintText: 'Password',
+                      obscureText: true,
+                    ),
+                  ),
+                  // forgot password?
+                  Padding(
+                    padding: const EdgeInsets.only(top: 1.0, left: 200),
+                    child: TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const ResetPasswordPage();
+                              },
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Forgot Password?',
+                          style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: blueLinkColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'WorkSansMedium'),
+                        )),
+                  ),
+                  //      if (email.isNotEmpty || password.isNotEmpty) {
+                  Padding(
+                    padding: const EdgeInsets.only(top: 3.0),
+                    child: MyButton(
+                        onTap: loginUser, text: "Login", isLoading: _isLoading),
+                  ),
 
-              // email textfield
-              TextFieldInput(
-                textInputType: TextInputType.emailAddress,
-                textEditingController: _emailController,
-                hintText: 'Email',
-              ),
-
-              const SizedBox(height: 10),
-
-              // password textfield
-              TextFieldInput(
-                textInputType: TextInputType.text,
-                textEditingController: _passwordController,
-                hintText: 'Password',
-                obscureText: true,
-              ),
-
-              const SizedBox(height: 10),
-
-              // forgot password?
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return const ResetPasswordPage();
-                            },
+                  // or continue with
+                  Padding(
+                    padding: const EdgeInsets.only(top: 35.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: <Color>[
+                                  Colors.white10,
+                                  Colors.white,
+                                ],
+                                begin: FractionalOffset(0.0, 0.0),
+                                end: FractionalOffset(1.0, 1.0),
+                                stops: <double>[0.0, 1.0],
+                                tileMode: TileMode.clamp),
                           ),
-                        );
-                      },
-                      child: const Text(
-                        'Forgot Password?',
-                        style: TextStyle(
-                          color: blueLinkColor,
-                          fontWeight: FontWeight.bold,
+                          width: 100.0,
+                          height: 1.0,
                         ),
-                      ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                          child: Text(
+                            'Or',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.0,
+                                fontFamily: 'WorkSansMedium'),
+                          ),
+                        ),
+                        Container(
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: <Color>[
+                                  Colors.white,
+                                  Colors.white10,
+                                ],
+                                begin: FractionalOffset(0.0, 0.0),
+                                end: FractionalOffset(1.0, 1.0),
+                                stops: <double>[0.0, 1.0],
+                                tileMode: TileMode.clamp),
+                          ),
+                          width: 100.0,
+                          height: 1.0,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
+                  ),
+                  // sign in  with google button
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: _isGoogleSigningIn
+                        ? const CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(fillColor),
+                          )
+                        : OutlinedButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(fillColor),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                            ),
+                            onPressed: () async {
+                              setState(() {
+                                _isGoogleSigningIn = true;
+                              });
 
-              const SizedBox(height: 10),
+                              String res =
+                                  await AuthMethods().signInWithGoogle();
 
-//      if (email.isNotEmpty || password.isNotEmpty) {
-              MyButton(onTap: loginUser, text: "Login", isLoading: _isLoading),
+                              // if string returned is sucess, user has been created
+                              if (res == "success") {
+                                setState(() {
+                                  _isLoading = false;
+                                });
+                                // navigate to the home screen
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ResponsiveLayout(
+                                      mobileScreenLayout: MobileScreenLayout(),
+                                      webScreenLayout: WebScreenLayout(),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                setState(() {
+                                  _isLoading = false;
+                                });
+                                // show the error
+                                showSnackBar(context, res);
+                              }
 
-              Flexible(child: Container(), flex: 1),
-              // or continue with
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  children: const [
-                    Expanded(
-                      child: Divider(
-                        thickness: 0.5,
-                        color: primaryColor,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Text(
-                        'Or',
-                        style: TextStyle(color: primaryColor),
-                      ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        thickness: 0.5,
-                        color: primaryColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 25),
-
-              // sign in  with google button
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: _isGoogleSigningIn
-                    ? const CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(fillColor),
-                      )
-                    : OutlinedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(fillColor),
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
+                              setState(() {
+                                _isGoogleSigningIn = false;
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(15),
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 30),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const <Widget>[
+                                  Image(
+                                    image: AssetImage("assets/google.png"),
+                                    height: 30,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      'Sign in with Google',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: primaryColorBlack,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                  ),
+                  // not a member? register now
+                  Padding(
+                    padding: const EdgeInsets.only(top: 70.0, bottom: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Not a member?',
+                          style: TextStyle(
+                            color: primaryColorBlack,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        GestureDetector(
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const SignupScreen(),
+                            ),
+                          ),
+                          child: const Text(
+                            'Register now',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: blueLinkColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        onPressed: () async {
-                          setState(() {
-                            _isGoogleSigningIn = true;
-                          });
-
-                          String res = await AuthMethods().signInWithGoogle();
-
-                          // if string returned is sucess, user has been created
-                          if (res == "success") {
-                            setState(() {
-                              _isLoading = false;
-                            });
-                            // navigate to the home screen
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => const ResponsiveLayout(
-                                  mobileScreenLayout: MobileScreenLayout(),
-                                  webScreenLayout: WebScreenLayout(),
-                                ),
-                              ),
-                            );
-                          } else {
-                            setState(() {
-                              _isLoading = false;
-                            });
-                            // show the error
-                            showSnackBar(context, res);
-                          }
-
-                          setState(() {
-                            _isGoogleSigningIn = false;
-                          });
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(15),
-                          margin: const EdgeInsets.symmetric(horizontal: 30),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const <Widget>[
-                              Image(
-                                image: AssetImage("assets/google.png"),
-                                height: 30,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 10),
-                                child: Text(
-                                  'Sign in with Google',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: primaryColor,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-              ),
-              Flexible(child: Container(), flex: 1),
-              const SizedBox(height: 25),
-              // not a member? register now
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Not a member?',
-                    style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const SignupScreen(),
-                      ),
-                    ),
-                    child: const Text(
-                      'Register now',
-                      style: TextStyle(
-                        color: blueLinkColor,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      ],
                     ),
                   ),
                 ],
               ),
-
-              const SizedBox(height: 10),
-            ],
-          ),
-        ),
-      ),
+            ),
+          )),
     );
   }
 }

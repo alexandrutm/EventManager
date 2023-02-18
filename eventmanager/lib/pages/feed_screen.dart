@@ -32,7 +32,7 @@ class _FeedScreenState extends State<FeedScreen> {
                 'Event Manager',
                 style: TextStyle(
                     fontFamily: 'Billabong',
-                    color: primaryColor,
+                    color: primaryColorBlack,
                     fontSize: 32,
                     fontWeight: FontWeight.bold),
               ),
@@ -40,14 +40,14 @@ class _FeedScreenState extends State<FeedScreen> {
                 IconButton(
                   icon: const Icon(
                     Icons.messenger_outline,
-                    color: primaryColor,
+                    color: primaryColorBlack,
                   ),
                   onPressed: () {},
                 ),
                 IconButton(
                   icon: const Icon(
                     Icons.logout_outlined,
-                    color: primaryColor,
+                    color: primaryColorBlack,
                   ),
                   onPressed: () async {
                     await AuthMethods().signOut();

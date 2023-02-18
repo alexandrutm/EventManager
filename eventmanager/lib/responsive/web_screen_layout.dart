@@ -49,42 +49,42 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
         centerTitle: false,
         title: SvgPicture.asset(
           'assets/ic_eventmanager.svg',
-          color: primaryColor,
+          color: primaryColorBlack,
           height: 32,
         ),
         actions: [
           IconButton(
             icon: Icon(
               Icons.home,
-              color: _page == 0 ? primaryColor : secondaryColor,
+              color: _page == 0 ? primaryColorBlack : secondaryColor,
             ),
             onPressed: () => navigationTapped(0),
           ),
           IconButton(
             icon: Icon(
               Icons.search,
-              color: _page == 1 ? primaryColor : secondaryColor,
+              color: _page == 1 ? primaryColorBlack : secondaryColor,
             ),
             onPressed: () => navigationTapped(1),
           ),
           IconButton(
             icon: Icon(
               Icons.add_a_photo,
-              color: _page == 2 ? primaryColor : secondaryColor,
+              color: _page == 2 ? primaryColorBlack : secondaryColor,
             ),
             onPressed: () => navigationTapped(2),
           ),
           IconButton(
             icon: Icon(
               Icons.favorite,
-              color: _page == 3 ? primaryColor : secondaryColor,
+              color: _page == 3 ? primaryColorBlack : secondaryColor,
             ),
             onPressed: () => navigationTapped(3),
           ),
           IconButton(
             icon: Icon(
               Icons.person,
-              color: _page == 4 ? primaryColor : secondaryColor,
+              color: _page == 4 ? primaryColorBlack : secondaryColor,
             ),
             onPressed: () => navigationTapped(4),
           ),

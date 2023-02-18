@@ -86,14 +86,15 @@ class _SignupScreenState extends State<SignupScreen> {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor:
-          width > webScreenSize ? webBackgroundColor : mobileBackgroundColor,
       body: SafeArea(
         child: Container(
           padding: width > webScreenSize
               ? EdgeInsets.symmetric(
                   horizontal: MediaQuery.of(context).size.width / 3)
               : const EdgeInsets.symmetric(horizontal: 5),
+          decoration: const BoxDecoration(
+            gradient: backgroundGradientColor,
+          ),
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -177,7 +178,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: const Text(
                       'Already have an account?',
                       style: TextStyle(
-                        color: primaryColor,
+                        color: primaryColorBlack,
                         fontSize: 15,
                       ),
                     ),
