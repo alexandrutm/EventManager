@@ -175,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               // sign in  with google button
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: _isGoogleSigningIn
                     ? const CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(fillColor),
@@ -222,15 +222,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             _isGoogleSigningIn = false;
                           });
                         },
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        child: Container(
+                          padding: const EdgeInsets.all(15),
+                          margin: const EdgeInsets.symmetric(horizontal: 30),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const <Widget>[
                               Image(
                                 image: AssetImage("assets/google.png"),
-                                height: 35.0,
+                                height: 30,
                               ),
                               Padding(
                                 padding: EdgeInsets.only(left: 10),
