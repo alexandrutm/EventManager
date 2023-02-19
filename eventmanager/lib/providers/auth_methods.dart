@@ -20,30 +20,6 @@ class AuthMethods {
     return model.User.fromSnap(documentSnapshot);
   }
 
-  void AddUserToDB(
-      String? aFirstName,
-      String? aLastName,
-      String? aUid,
-      String? aPhotoUrl,
-      String? aEmail,
-      String aAboutUser,
-      List aFollowers,
-      List aFollows) async {
-    model.User user = model.User(
-      mFirstName: aFirstName.toString(),
-      mLastName: aLastName.toString(),
-      uid: aUid.toString(),
-      photoUrl: aPhotoUrl.toString(),
-      email: aEmail.toString(),
-      bio: aAboutUser,
-      followers: aFollowers,
-      following: aFollows,
-    );
-
-    // adding user in our database
-    _firestore.collection("users").doc(aUid).set(user.toJson());
-  }
-
   // Signing Up User
   Future<String> RegisterUser({
     required String email,
@@ -65,8 +41,22 @@ class AuthMethods {
         String photoUrl = await StorageMethods()
             .uploadImageToStorage('profilePictures', file, false);
 
-        AddUserToDB(
-            firstname, lastname, cred.user!.uid, photoUrl, email, bio, [], []);
+        model.User user = model.User(
+          mFirstName: firstname,
+          mLastName: lastname,
+          uid: cred.user!.uid,
+          photoUrl: photoUrl,
+          email: email,
+          bio: bio,
+          followers: [],
+          following: [],
+        );
+
+        // adding user in our database
+        await _firestore
+            .collection("users")
+            .doc(cred.user!.uid)
+            .set(user.toJson());
 
         res = "success";
       } else {
@@ -118,8 +108,22 @@ class AuthMethods {
 
         List<String> spiltName = firebaseUser.user!.displayName!.split(" ");
 
-        AddUserToDB(spiltName.first, spiltName.last, firebaseUser.user!.uid,
-            firebaseUser.user!.photoURL, firebaseUser.user!.email, "", [], []);
+        model.User user = model.User(
+          mFirstName: spiltName.first,
+          mLastName: spiltName.last,
+          uid: firebaseUser.user!.uid,
+          photoUrl: firebaseUser.user!.photoURL.toString(),
+          email: firebaseUser.user!.email.toString(),
+          bio: "",
+          followers: [],
+          following: [],
+        );
+
+        // adding user in our database
+        await _firestore
+            .collection("users")
+            .doc(firebaseUser.user!.uid)
+            .set(user.toJson());
         return "success";
       } catch (e) {
         print(e);
@@ -144,13 +148,22 @@ class AuthMethods {
 
           List<String> spiltName = firebaseUser.user!.displayName!.split(" ");
 
-          AddUserToDB(
-              spiltName.first,
-              spiltName.last,
-              firebaseUser.user!.uid,
-              firebaseUser.user!.photoURL,
-              firebaseUser.user!.email,
-              "", [], []);
+          model.User user = model.User(
+            mFirstName: spiltName.first,
+            mLastName: spiltName.last,
+            uid: firebaseUser.user!.uid,
+            photoUrl: firebaseUser.user!.photoURL.toString(),
+            email: firebaseUser.user!.email.toString(),
+            bio: "",
+            followers: [],
+            following: [],
+          );
+
+          // adding user in our database
+          await _firestore
+              .collection("users")
+              .doc(firebaseUser.user!.uid)
+              .set(user.toJson());
 
           return "success";
         } on FirebaseAuthException catch (e) {
