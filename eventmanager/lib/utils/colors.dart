@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const mobileBackgroundColor = Color.fromARGB(255, 185, 191, 200);
+const mobileBackgroundColor = Color.fromARGB(255, 170, 207, 192);
 const webBackgroundColor = Color.fromARGB(255, 185, 191, 200);
 const focusedBorderColor = Color.fromARGB(255, 0, 87, 241);
 const mobileSearchColor = Color.fromARGB(255, 203, 188, 188);
@@ -16,6 +16,8 @@ class CustomTheme {
 
   static const Color bkgGradientStart = Color.fromARGB(255, 15, 161, 200);
   static const Color bkgGradientEnd = Color.fromARGB(255, 170, 220, 190);
+  static const Color btnGradientStart = Color.fromARGB(255, 6, 191, 255);
+  static const Color btnGradientEnd = Color.fromARGB(255, 45, 116, 255);
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
 

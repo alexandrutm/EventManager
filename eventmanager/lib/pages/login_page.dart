@@ -71,6 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
               FocusScope.of(context).requestFocus(FocusNode());
             },
             child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
               padding: width > webScreenSize
                   ? EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width / 3)
@@ -78,7 +80,6 @@ class _LoginScreenState extends State<LoginScreen> {
               decoration: const BoxDecoration(
                 gradient: backgroundGradientColor,
               ),
-              width: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -275,12 +276,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                   ),
                   // not a member? register now
-                  Padding(
-                    padding: const EdgeInsets.only(top: 70.0, bottom: 20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
+                  Row(
+                    children: [
+                      const Expanded(
+                          child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Text(
                           'Not a member?',
                           style: TextStyle(
                             color: primaryColorBlack,
@@ -288,25 +289,25 @@ class _LoginScreenState extends State<LoginScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(width: 4),
-                        GestureDetector(
-                          onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const SignupScreen(),
-                            ),
-                          ),
-                          child: const Text(
-                            'Register now',
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              color: blueLinkColor,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
+                      )),
+                      const SizedBox(width: 4),
+                      GestureDetector(
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const SignupScreen(),
                           ),
                         ),
-                      ],
-                    ),
+                        child: const Text(
+                          'Register now',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: blueLinkColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

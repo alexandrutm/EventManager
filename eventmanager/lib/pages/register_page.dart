@@ -73,136 +73,151 @@ class _SignupScreenState extends State<SignupScreen> {
     }
   }
 
-  selectImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery);
-    // set state because we need to display the image we selected on the circle avatar
-    setState(() {
-      _image = im;
-    });
+  Future selectImage() async {
+    try {
+      Uint8List im = await pickImage(ImageSource.gallery);
+
+      // set state because we need to display the image we selected on the circle avatar
+      setState(() {
+        _image = im;
+      });
+    } catch (err) {
+      print(err);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Container(
-          padding: width > webScreenSize
-              ? EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width / 3)
-              : const EdgeInsets.symmetric(horizontal: 5),
-          decoration: const BoxDecoration(
-            gradient: backgroundGradientColor,
-          ),
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Flexible(
-                child: Container(),
-                flex: 2,
-              ),
-              Stack(
-                children: [
-                  _image != null
-                      ? CircleAvatar(
-                          radius: 64,
-                          backgroundImage: MemoryImage(_image!),
-                          backgroundColor: Colors.red,
-                        )
-                      : const CircleAvatar(
-                          radius: 64,
-                          backgroundImage: NetworkImage(
-                              'https://i.stack.imgur.com/34AD2.jpg'),
-                          backgroundColor: Colors.red,
+      body: SingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(FocusNode());
+          },
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            padding: width > webScreenSize
+                ? EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width / 3)
+                : const EdgeInsets.symmetric(horizontal: 5),
+            decoration: const BoxDecoration(
+              gradient: backgroundGradientColor,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 130.0),
+                  child: Stack(
+                    children: [
+                      _image != null
+                          ? CircleAvatar(
+                              radius: 64,
+                              backgroundImage: MemoryImage(_image!),
+                              backgroundColor: Colors.red,
+                            )
+                          : const CircleAvatar(
+                              radius: 64,
+                              backgroundImage:
+                                  AssetImage('assets/noImage_thumbnail.png'),
+                              backgroundColor:
+                                  Color.fromARGB(255, 163, 149, 244),
+                            ),
+                      Positioned(
+                        bottom: -10,
+                        left: 80,
+                        child: IconButton(
+                          onPressed: selectImage,
+                          icon: const Icon(Icons.add_a_photo),
                         ),
-                  Positioned(
-                    bottom: -10,
-                    left: 80,
-                    child: IconButton(
-                      onPressed: selectImage,
-                      icon: const Icon(Icons.add_a_photo),
-                    ),
-                  )
-                ],
-              ),
-              Flexible(flex: 1, child: Container()),
-              TextFieldInput(
-                hintText: 'First name',
-                textInputType: TextInputType.text,
-                textEditingController: _firstnameController,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              TextFieldInput(
-                hintText: 'Last name',
-                textInputType: TextInputType.text,
-                textEditingController: _lastnameController,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              TextFieldInput(
-                hintText: 'Email',
-                textInputType: TextInputType.emailAddress,
-                textEditingController: _emailController,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              TextFieldInput(
-                hintText: 'Password',
-                textInputType: TextInputType.text,
-                textEditingController: _passwordController,
-                obscureText: true,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              MyButton(
-                  onTap: signUpUser, text: "Sign up", isLoading: _isLoading),
-              const SizedBox(
-                height: 15,
-              ),
-              Flexible(
-                child: Container(),
-                flex: 2,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: const Text(
-                      'Already have an account?',
-                      style: TextStyle(
-                        color: primaryColorBlack,
-                        fontSize: 15,
-                      ),
-                    ),
+                      )
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ),
-                    ),
-                    child: Container(
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 80.0),
+                  child: TextFieldInput(
+                    hintText: 'First name',
+                    textInputType: TextInputType.text,
+                    textEditingController: _firstnameController,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFieldInput(
+                  hintText: 'Last name',
+                  textInputType: TextInputType.text,
+                  textEditingController: _lastnameController,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFieldInput(
+                  hintText: 'Email',
+                  textInputType: TextInputType.emailAddress,
+                  textEditingController: _emailController,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFieldInput(
+                  hintText: 'Password',
+                  textInputType: TextInputType.text,
+                  textEditingController: _passwordController,
+                  obscureText: true,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                MyButton(
+                    onTap: signUpUser, text: "Sign up", isLoading: _isLoading),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: const Text(
-                        ' Login.',
+                        'Already have an account?',
                         style: TextStyle(
-                          color: blueLinkColor,
+                          color: primaryColorBlack,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: const Text(
+                          ' Login.',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: blueLinkColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
