@@ -276,38 +276,43 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                   ),
                   // not a member? register now
-                  Row(
-                    children: [
-                      const Expanded(
-                          child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Text(
-                          'Not a member?',
-                          style: TextStyle(
-                            color: primaryColorBlack,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      )),
-                      const SizedBox(width: 4),
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const SignupScreen(),
-                          ),
-                        ),
-                        child: const Text(
-                          'Register now',
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            color: blueLinkColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
+                  Expanded(
+                    child: Align(
+                      alignment: FractionalOffset.bottomCenter,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 3),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Not a member?',
+                              style: TextStyle(
+                                color: primaryColorBlack,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            GestureDetector(
+                              onTap: () => Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const SignupScreen(),
+                                ),
+                              ),
+                              child: const Text(
+                                'Register now',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: blueLinkColor,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ],
               ),

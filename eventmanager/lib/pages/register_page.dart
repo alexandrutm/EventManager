@@ -178,44 +178,42 @@ class _SignupScreenState extends State<SignupScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: const Text(
-                        'Already have an account?',
-                        style: TextStyle(
-                          color: primaryColorBlack,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ),
-                      ),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: const Text(
-                          ' Login.',
+                Expanded(
+                    child: Align(
+                  alignment: FractionalOffset.bottomCenter,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 3),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Already have an account?',
                           style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            color: blueLinkColor,
-                            fontSize: 15,
+                            color: primaryColorBlack,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
+                        GestureDetector(
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                          ),
+                          child: const Text(
+                            ' Login.',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: blueLinkColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                    )
-                  ],
-                ),
+                  ),
+                )),
               ],
             ),
           ),
