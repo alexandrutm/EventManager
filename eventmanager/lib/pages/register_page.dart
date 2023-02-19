@@ -42,6 +42,10 @@ class _SignupScreenState extends State<SignupScreen> {
       _isLoading = true;
     });
 
+    _image ??= (await rootBundle.load('assets/noImage_thumbnail.png'))
+        .buffer
+        .asUint8List();
+
     // signup user using our authmethodds
     String res = await AuthMethods().RegisterUser(
         email: _emailController.text,
