@@ -45,7 +45,7 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: mobileBackgroundColor,
+        backgroundColor: mobileBkgColor,
         centerTitle: false,
         title: SvgPicture.asset(
           'assets/ic_eventmanager.svg',

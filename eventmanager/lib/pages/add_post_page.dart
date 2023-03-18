@@ -125,7 +125,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         : Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              backgroundColor: mobileBackgroundColor,
+              backgroundColor: mobileBkgColor,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: clearImage,

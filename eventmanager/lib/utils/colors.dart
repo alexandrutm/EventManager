@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-const mobileBackgroundColor = Color.fromARGB(255, 170, 207, 192);
+const followBtnColor = Color.fromARGB(255, 172, 192, 242);
+const mobileBkgColor = Color.fromARGB(255, 111, 228, 233);
 const webBackgroundColor = Color.fromARGB(255, 185, 191, 200);
 const focusedBorderColor = Color.fromARGB(255, 0, 87, 241);
 const mobileSearchColor = Color.fromARGB(255, 203, 188, 188);
 const blueLinkColor = Color.fromARGB(255, 4, 109, 196);
-const primaryColorBlack = Colors.black87;
+const primaryColorBlack = Color.fromARGB(221, 0, 0, 0);
 const primaryColorWhite = Colors.white;
-const secondaryColor = Colors.grey;
+const secondaryColor = Color.fromARGB(255, 94, 104, 128);
 const greyShadeTextColor = Color.fromARGB(200, 158, 158, 158);
 const fillColor = Color.fromRGBO(238, 238, 238, 1);
 
@@ -31,6 +32,13 @@ class CustomTheme {
 
 const LinearGradient backgroundGradientColor = LinearGradient(
     colors: <Color>[CustomTheme.bkgGradientStart, CustomTheme.bkgGradientEnd],
+    begin: FractionalOffset(0.0, 0.0),
+    end: FractionalOffset(1.0, 1.0),
+    stops: <double>[0.0, 1.0],
+    tileMode: TileMode.clamp);
+
+const LinearGradient topbBarGradientColor = LinearGradient(
+    colors: <Color>[CustomTheme.bkgGradientStart, CustomTheme.bkgGradientStart],
     begin: FractionalOffset(0.0, 0.0),
     end: FractionalOffset(1.0, 1.0),
     stops: <double>[0.0, 1.0],

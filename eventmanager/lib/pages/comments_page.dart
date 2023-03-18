@@ -52,7 +52,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: mobileBackgroundColor,
+        backgroundColor: mobileBkgColor,
         title: const Text(
           'Comments',
         ),

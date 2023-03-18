@@ -48,7 +48,7 @@ class _SignupScreenState extends State<SignupScreen> {
         .asUint8List();
 
     // signup user using our authmethodds
-    String res = await AuthMethods().RegisterUser(
+    String res = await AuthMethods().registerUser(
         email: _emailController.text,
         password: _passwordController.text,
         firstname: _firstnameController.text,

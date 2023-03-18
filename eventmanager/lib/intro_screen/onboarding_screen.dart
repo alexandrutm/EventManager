@@ -1,7 +1,7 @@
 import 'package:eventmanager/intro_screen/intro_page1.dart';
 import 'package:eventmanager/intro_screen/intro_page2.dart';
 import 'package:eventmanager/intro_screen/intro_page3.dart';
-import 'package:eventmanager/pages/feed_screen.dart';
+import 'package:eventmanager/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -62,7 +62,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return FeedScreen();
+                                return HomePage();
                               },
                             ),
                           );

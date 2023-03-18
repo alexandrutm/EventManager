@@ -17,28 +17,18 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: backgroundGradientColor,
-        ),
-        child: ListView(
-          padding: const EdgeInsets.all(10),
-          children: [
-            SettingsGroup(
-              title: 'General',
-              children: <Widget>[
-                buildLogout(context),
-              ],
-            ),
-            SettingsGroup(
-              title: 'General',
-              titleTextStyle: TextStyle(color: Colors.black),
-              children: <Widget>[
-                buildLogout(context),
-              ],
-            ),
-          ],
-        ),
+      body: ListView(
+        padding: const EdgeInsets.all(24),
+        children: [
+          SettingsGroup(
+            title: 'General',
+            titleTextStyle:
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            children: <Widget>[
+              buildLogout(context),
+            ],
+          ),
+        ],
       ),
     );
   }

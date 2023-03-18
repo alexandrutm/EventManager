@@ -36,11 +36,6 @@ class _HomePageState extends State<HomePage> {
                     fontSize: 32,
                     fontWeight: FontWeight.bold),
               ),
-              flexibleSpace: Container(
-                decoration: const BoxDecoration(
-                  gradient: topbBarGradientColor,
-                ),
-              ),
             ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('posts').snapshots(),

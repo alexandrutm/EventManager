@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:eventmanager/models/user.dart' as model;
 import 'package:eventmanager/providers/user_provider.dart';
 import 'package:eventmanager/resources/firestore_methods.dart';
-import 'package:eventmanager/pages/comments_screen.dart';
+import 'package:eventmanager/pages/comments_page.dart';
 import 'package:eventmanager/utils/colors.dart';
 import 'package:eventmanager/utils/global_variable.dart';
 import 'package:eventmanager/utils/utils.dart';
@@ -69,9 +69,9 @@ class _PostCardState extends State<PostCard> {
       // boundary needed for web
       decoration: BoxDecoration(
         border: Border.all(
-          color: width > webScreenSize ? secondaryColor : mobileBackgroundColor,
+          color: width > webScreenSize ? secondaryColor : mobileBkgColor,
         ),
-        color: mobileBackgroundColor,
+        color: mobileBkgColor,
       ),
       padding: const EdgeInsets.symmetric(
         vertical: 10,
