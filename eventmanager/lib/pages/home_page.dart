@@ -7,26 +7,26 @@ import 'package:eventmanager/components/post_card.dart';
 import '../providers/auth_methods.dart';
 import 'login_page.dart';
 
-class FeedScreen extends StatefulWidget {
-  const FeedScreen({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<FeedScreen> createState() => _FeedScreenState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _FeedScreenState extends State<FeedScreen> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       backgroundColor:
-          width > webScreenSize ? webBackgroundColor : mobileBackgroundColor,
+          width > webScreenSize ? webBackgroundColor : mobileBkgColor,
       appBar: width > webScreenSize
           ? null
           : AppBar(
               automaticallyImplyLeading: false,
-              backgroundColor: mobileBackgroundColor,
+              backgroundColor: mobileBkgColor,
               centerTitle: false,
               title: const Text(
                 'Event Manager',
@@ -36,29 +36,11 @@ class _FeedScreenState extends State<FeedScreen> {
                     fontSize: 32,
                     fontWeight: FontWeight.bold),
               ),
-              actions: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.messenger_outline,
-                    color: primaryColorBlack,
-                  ),
-                  onPressed: () {},
+              flexibleSpace: Container(
+                decoration: const BoxDecoration(
+                  gradient: topbBarGradientColor,
                 ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.logout_outlined,
-                    color: primaryColorBlack,
-                  ),
-                  onPressed: () async {
-                    await AuthMethods().signOut();
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ),
-                    );
-                  },
-                ),
-              ],
+              ),
             ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('posts').snapshots(),
