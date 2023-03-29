@@ -3,47 +3,50 @@ import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 
 import '../components/icon_widget.dart';
 import '../providers/auth_methods.dart';
-import '../utils/colors.dart';
 import 'account_settings_page.dart';
 import 'login_page.dart';
 
-class SettingsPage extends StatefulWidget {
+class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
-}
-
-class _SettingsPageState extends State<SettingsPage> {
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        padding: const EdgeInsets.all(24),
+    return Stack(
+        alignment: AlignmentDirectional.topCenter,
+        clipBehavior: Clip.none,
         children: [
-          SettingsGroup(
-            title: 'General',
-            children: <Widget>[
-              const AccountSettings(),
-              buildLogout(context),
-            ],
-          ),
-          const SizedBox(
-            height: 32,
-          ),
-          SettingsGroup(
-            title: 'FEEDBACK',
-            children: <Widget>[
-              const SizedBox(
-                height: 8,
+          Positioned(
+            child: Container(
+              width: 60,
+              height: 7,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.white,
               ),
-              buildSendFeedback(context),
-              buildReportBug(context),
+            ),
+          ),
+          Column(
+            children: [
+              SettingsGroup(
+                title: 'General',
+                children: <Widget>[
+                  const AccountSettings(),
+                  buildLogout(context),
+                ],
+              ),
+              SettingsGroup(
+                title: 'FEEDBACK',
+                children: <Widget>[
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  buildSendFeedback(context),
+                  buildReportBug(context),
+                ],
+              ),
             ],
           ),
-        ],
-      ),
-    );
+        ]);
   }
 }
 

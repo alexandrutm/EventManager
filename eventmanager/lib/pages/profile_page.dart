@@ -95,12 +95,26 @@ class _ProfilePageState extends State<ProfilePage> {
                 IconButton(
                   icon: const Icon(
                     Icons.menu,
-                    color: primaryColorBlack,
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const SettingsPage(),
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(30),
+                        ),
+                      ),
+                      builder: (context) => DraggableScrollableSheet(
+                        expand: false,
+                        initialChildSize: 0.3,
+                        maxChildSize: 0.9,
+                        minChildSize: 0.28,
+                        builder: (context, scrollController) =>
+                            SingleChildScrollView(
+                          controller: scrollController,
+                          child: const SettingsPage(),
+                        ),
                       ),
                     );
                   },
