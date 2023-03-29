@@ -94,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage> {
               actions: [
                 IconButton(
                   icon: const Icon(
-                    Icons.settings,
+                    Icons.menu,
                     color: primaryColorBlack,
                   ),
                   onPressed: () {

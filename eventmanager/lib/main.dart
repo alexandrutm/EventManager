@@ -7,6 +7,7 @@ import 'package:eventmanager/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:provider/provider.dart';
 import 'providers/firebase_options.dart';
 
@@ -15,6 +16,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Settings.init(cacheProvider: SharePreferenceCache());
   runApp(const EventManager());
 }
 
@@ -32,7 +34,7 @@ class EventManager extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'EventManager',
-        theme: ThemeData.dark().copyWith(
+        theme: ThemeData.light().copyWith(
             splashColor: Colors.blue,
             scaffoldBackgroundColor: mobileBkgColor,
             canvasColor: mobileBkgColor),
