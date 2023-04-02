@@ -16,6 +16,7 @@ class SettingsPage extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Positioned(
+            top: 6,
             child: Container(
               width: 60,
               height: 7,
@@ -29,9 +30,8 @@ class SettingsPage extends StatelessWidget {
             children: [
               SettingsGroup(
                 title: 'General',
-                children: <Widget>[
-                  const AccountSettings(),
-                  buildLogout(context),
+                children: const <Widget>[
+                  AccountSettings(),
                 ],
               ),
               SettingsGroup(
@@ -42,6 +42,7 @@ class SettingsPage extends StatelessWidget {
                   ),
                   buildSendFeedback(context),
                   buildReportBug(context),
+                  buildLogout(context),
                 ],
               ),
             ],

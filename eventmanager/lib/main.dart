@@ -34,10 +34,7 @@ class EventManager extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'EventManager',
-        theme: ThemeData.light().copyWith(
-            splashColor: Colors.blue,
-            scaffoldBackgroundColor: mobileBkgColor,
-            canvasColor: mobileBkgColor),
+        theme: ThemeData.light(),
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
@@ -55,7 +52,6 @@ class EventManager extends StatelessWidget {
                 );
               }
             }
-
             // means connection to future hasnt been made yet
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(

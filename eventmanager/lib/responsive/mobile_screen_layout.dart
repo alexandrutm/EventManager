@@ -41,50 +41,36 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-        children: homeScreenItems,
         controller: pageController,
         onPageChanged: onPageChanged,
+        children: homeScreenItems,
       ),
       bottomNavigationBar: CupertinoTabBar(
-        backgroundColor: mobileBkgColor,
-        items: <BottomNavigationBarItem>[
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
-              color: (_page == 0) ? primaryColorBlack : secondaryColor,
             ),
-            label: '',
-            backgroundColor: primaryColorBlack,
           ),
           BottomNavigationBarItem(
-              icon: Icon(
-                Icons.search,
-                color: (_page == 1) ? primaryColorBlack : secondaryColor,
-              ),
-              label: '',
-              backgroundColor: primaryColorBlack),
+            icon: Icon(
+              Icons.search,
+            ),
+          ),
           BottomNavigationBarItem(
-              icon: Icon(
-                Icons.add_circle,
-                color: (_page == 2) ? primaryColorBlack : secondaryColor,
-              ),
-              label: '',
-              backgroundColor: primaryColorBlack),
+            icon: Icon(
+              Icons.add_circle,
+            ),
+          ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.favorite,
-              color: (_page == 3) ? primaryColorBlack : secondaryColor,
             ),
-            label: '',
-            backgroundColor: primaryColorBlack,
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person,
-              color: (_page == 4) ? primaryColorBlack : secondaryColor,
             ),
-            label: '',
-            backgroundColor: primaryColorBlack,
           ),
         ],
         onTap: navigationTapped,

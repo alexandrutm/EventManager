@@ -20,19 +20,15 @@ class _HomePageState extends State<HomePage> {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor:
-          width > webScreenSize ? webBackgroundColor : mobileBkgColor,
       appBar: width > webScreenSize
           ? null
           : AppBar(
               automaticallyImplyLeading: false,
-              backgroundColor: mobileBkgColor,
               centerTitle: false,
               title: const Text(
                 'Event Manager',
                 style: TextStyle(
                     fontFamily: 'Billabong',
-                    color: primaryColorBlack,
                     fontSize: 32,
                     fontWeight: FontWeight.bold),
               ),

@@ -86,16 +86,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 userData['firstname'] + " " + userData['lastname'],
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: primaryColorBlack,
                 ),
               ),
               centerTitle: false,
-              backgroundColor: mobileBkgColor,
               actions: [
                 IconButton(
                   icon: const Icon(
                     Icons.menu,
-                    color: primaryColorBlack,
                   ),
                   onPressed: () {
                     showModalBottomSheet(
@@ -108,9 +105,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       builder: (context) => DraggableScrollableSheet(
                         expand: false,
-                        initialChildSize: 0.3,
+                        initialChildSize: 0.4,
                         maxChildSize: 0.9,
-                        minChildSize: 0.28,
+                        minChildSize: 0.38,
                         builder: (context, scrollController) =>
                             SingleChildScrollView(
                           controller: scrollController,
@@ -131,7 +128,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       Row(
                         children: [
                           CircleAvatar(
-                            backgroundColor: Colors.grey,
                             backgroundImage: NetworkImage(
                               userData['photoUrl'],
                             ),
@@ -283,7 +279,6 @@ class _ProfilePageState extends State<ProfilePage> {
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: primaryColorBlack,
           ),
         ),
         Container(
@@ -293,7 +288,6 @@ class _ProfilePageState extends State<ProfilePage> {
             style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
-              color: primaryColorBlack,
             ),
           ),
         ),
