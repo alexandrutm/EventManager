@@ -95,6 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 IconButton(
                   icon: const Icon(
                     Icons.menu,
+                    color: primaryColorBlack,
                   ),
                   onPressed: () {
                     showModalBottomSheet(

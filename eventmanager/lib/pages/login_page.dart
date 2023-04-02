@@ -223,22 +223,27 @@ class _LoginScreenState extends State<LoginScreen> {
                               // if string returned is sucess, user has been created
                               if (res == "success") {
                                 // navigate to the home screen
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ResponsiveLayout(
-                                      mobileScreenLayout: MobileScreenLayout(),
-                                      webScreenLayout: WebScreenLayout(),
+                                if (context.mounted) {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ResponsiveLayout(
+                                        mobileScreenLayout:
+                                            MobileScreenLayout(),
+                                        webScreenLayout: WebScreenLayout(),
+                                      ),
                                     ),
-                                  ),
-                                );
+                                  );
+                                }
                               } else {
                                 // show the error
                                 showSnackBar(context, res);
                               }
-                              setState(() {
-                                _isGoogleSigningIn = false;
-                              });
+                              if (context.mounted) {
+                                setState(() {
+                                  _isGoogleSigningIn = false;
+                                });
+                              }
                             },
                             child: Container(
                               padding: const EdgeInsets.all(15),
