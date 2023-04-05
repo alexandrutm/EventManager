@@ -15,6 +15,7 @@ class AccountSettings extends StatelessWidget {
         child: SettingsScreen(title: 'Account Settings', children: <Widget>[
           buildLanguage(),
           buildPassword(),
+          buildChangePhoto(),
         ]),
       );
 
@@ -22,7 +23,7 @@ class AccountSettings extends StatelessWidget {
         title: 'Language',
         settingKey: keyLanguage,
         selected: 1,
-        values: <int, String>{
+        values: const <int, String>{
           1: 'English',
           2: 'Spanish',
         },
@@ -36,5 +37,10 @@ class AccountSettings extends StatelessWidget {
         validator: (password) => password != null && password.length < 6
             ? null
             : 'You password must be at least 6 characters',
+      );
+
+  Widget buildChangePhoto() => ModalSettingsTile(
+        title: 'Change photo',
+        children: [],
       );
 }
