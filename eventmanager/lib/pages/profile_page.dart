@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eventmanager/pages/settings_page.dart';
+import 'package:eventmanager/pages/settings/settings_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:eventmanager/providers/auth_methods.dart';
 import 'package:eventmanager/resources/firestore_methods.dart';
-import 'package:eventmanager/pages/login_page.dart';
-import 'package:eventmanager/utils/colors.dart';
 import 'package:eventmanager/utils/utils.dart';
 import 'package:eventmanager/components/follow_button.dart';
 
@@ -14,7 +11,9 @@ class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key, required this.uid}) : super(key: key);
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  State<ProfilePage> createState() {
+    return _ProfilePageState();
+  }
 }
 
 class _ProfilePageState extends State<ProfilePage> {
@@ -36,6 +35,28 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     getData();
+  }
+
+  void _showModalBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(30),
+        ),
+      ),
+      builder: (context) => DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.5,
+        maxChildSize: 0.9,
+        minChildSize: 0.28,
+        builder: (context, scrollController) => SingleChildScrollView(
+          controller: scrollController,
+          child: const SettingsPage(),
+        ),
+      ),
+    );
   }
 
   getData() async {
@@ -91,32 +112,10 @@ class _ProfilePageState extends State<ProfilePage> {
               centerTitle: false,
               actions: [
                 IconButton(
-                  icon: const Icon(
-                    Icons.menu,
-                  ),
-                  onPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(30),
-                        ),
-                      ),
-                      builder: (context) => DraggableScrollableSheet(
-                        expand: false,
-                        initialChildSize: 0.4,
-                        maxChildSize: 0.9,
-                        minChildSize: 0.38,
-                        builder: (context, scrollController) =>
-                            SingleChildScrollView(
-                          controller: scrollController,
-                          child: const SettingsPage(),
-                        ),
-                      ),
-                    );
-                  },
-                ),
+                    icon: const Icon(
+                      Icons.menu,
+                    ),
+                    onPressed: () => _showModalBottomSheet(context)),
               ],
             ),
             body: ListView(
@@ -147,82 +146,59 @@ class _ProfilePageState extends State<ProfilePage> {
                                     buildStatColumn(following, "Following"),
                                   ],
                                 ),
-                                //follow/unfollow/sign out
+                                //follow/unfollow
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    FirebaseAuth.instance.currentUser!.uid ==
-                                            widget.uid
-                                        ? FollowButton(
-                                            text: 'Edit Profile',
-                                            backgroundColor: followBtnColor,
-                                            textColor: primaryColorBlack,
-                                            borderColor: Colors.grey,
-                                            function: () {
-                                              Navigator.of(context)
-                                                  .pushReplacement(
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const SettingsPage(),
-                                                ),
-                                              );
-                                            },
-                                          )
-                                        : isFollowing
-                                            ? FollowButton(
-                                                text: 'Unfollow',
-                                                backgroundColor: Colors.white,
-                                                textColor: Colors.black,
-                                                borderColor: Colors.grey,
-                                                function: () async {
-                                                  await FireStoreMethods()
-                                                      .followUser(
-                                                    FirebaseAuth.instance
-                                                        .currentUser!.uid,
-                                                    userData['uid'],
-                                                  );
+                                    if (FirebaseAuth
+                                            .instance.currentUser!.uid !=
+                                        widget.uid)
+                                      isFollowing
+                                          ? FollowButton(
+                                              text: 'Unfollow',
+                                              backgroundColor: Colors.white,
+                                              textColor: Colors.black,
+                                              borderColor: Colors.grey,
+                                              function: () async {
+                                                await FireStoreMethods()
+                                                    .followUser(
+                                                  FirebaseAuth.instance
+                                                      .currentUser!.uid,
+                                                  userData['uid'],
+                                                );
 
-                                                  setState(() {
-                                                    isFollowing = false;
-                                                    followers--;
-                                                  });
-                                                },
-                                              )
-                                            : FollowButton(
-                                                text: 'Follow',
-                                                backgroundColor: Colors.blue,
-                                                textColor: Colors.white,
-                                                borderColor: Colors.blue,
-                                                function: () async {
-                                                  await FireStoreMethods()
-                                                      .followUser(
-                                                    FirebaseAuth.instance
-                                                        .currentUser!.uid,
-                                                    userData['uid'],
-                                                  );
+                                                setState(() {
+                                                  isFollowing = false;
+                                                  followers--;
+                                                });
+                                              },
+                                            )
+                                          : FollowButton(
+                                              text: 'Follow',
+                                              backgroundColor: Colors.blue,
+                                              textColor: Colors.white,
+                                              borderColor: Colors.blue,
+                                              function: () async {
+                                                await FireStoreMethods()
+                                                    .followUser(
+                                                  FirebaseAuth.instance
+                                                      .currentUser!.uid,
+                                                  userData['uid'],
+                                                );
 
-                                                  setState(() {
-                                                    isFollowing = true;
-                                                    followers++;
-                                                  });
-                                                },
-                                              )
+                                                setState(() {
+                                                  isFollowing = true;
+                                                  followers++;
+                                                });
+                                              },
+                                            )
                                   ],
                                 ),
                               ],
                             ),
                           ),
                         ],
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.only(
-                          top: 1,
-                        ),
-                        child: Text(
-                          userData['bio'],
-                        ),
                       ),
                     ],
                   ),
