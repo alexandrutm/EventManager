@@ -1,5 +1,4 @@
 import 'package:eventmanager/pages/login_page.dart';
-import 'package:eventmanager/pages/settings/settings_page.dart';
 import 'package:eventmanager/providers/user_provider.dart';
 import 'package:eventmanager/responsive/mobile_screen_layout.dart';
 import 'package:eventmanager/responsive/responsive_layout.dart';
@@ -26,46 +25,41 @@ class EventManager extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Settings.getValue<bool>(SettingsPage.keyDarkMode);
-    return ValueChangeObserver<bool>(
-      cacheKey: SettingsPage.keyDarkMode,
-      defaultValue: false,
-      builder: (_, isDarkMode, __) => MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (_) => UserProvider(),
-          ),
-        ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'EventManager',
-          theme: isDarkMode ? ThemeData.dark() : ThemeData.light(),
-          home: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.active) {
-                //Checking if the snapshot has any data or not
-                if (snapshot.hasData) {
-                  // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
-                  return const ResponsiveLayout(
-                    mobileScreenLayout: MobileScreenLayout(),
-                    webScreenLayout: WebScreenLayout(),
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text('${snapshot.error}'),
-                  );
-                }
-              }
-              // means connection to future hasnt been made yet
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UserProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'EventManager',
+        theme: ThemeData.light(),
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.active) {
+              //Checking if the snapshot has any data or not
+              if (snapshot.hasData) {
+                // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
+                return const ResponsiveLayout(
+                  mobileScreenLayout: MobileScreenLayout(),
+                  webScreenLayout: WebScreenLayout(),
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text('${snapshot.error}'),
                 );
               }
-              return const LoginScreen();
-            },
-          ),
+            }
+            // means connection to future hasnt been made yet
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return const LoginScreen();
+          },
         ),
       ),
     );
