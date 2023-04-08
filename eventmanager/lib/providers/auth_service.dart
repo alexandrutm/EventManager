@@ -10,21 +10,21 @@ class AuthService {
       {required BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     final UserCredential firebaseUser;
-    final Map<String, dynamic> userdata = {};
+    Map<String, dynamic> userdata = {};
 
     if (kIsWeb) {
       GoogleAuthProvider authProvider = GoogleAuthProvider();
 
       try {
         firebaseUser = await auth.signInWithPopup(authProvider);
-        Map<String, dynamic> userdata = {
+        userdata = {
           'useremail': firebaseUser.user!.email,
           'displayname': firebaseUser.user!.displayName,
           'photoUrl': firebaseUser.user!.photoURL,
           'userid': firebaseUser.user!.uid,
         };
       } catch (err) {
-        print(err);
+        // print(err);
       }
     } else {
       final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -44,7 +44,7 @@ class AuthService {
         try {
           firebaseUser = await auth.signInWithCredential(credential);
 
-          Map<String, dynamic> userdata = {
+          userdata = {
             'useremail': firebaseUser.user!.email,
             'displayname': firebaseUser.user!.displayName,
             'photoUrl': firebaseUser.user!.photoURL,

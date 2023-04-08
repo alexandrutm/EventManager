@@ -122,7 +122,7 @@ class FireStoreMethods {
         });
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
     }
   }
 }

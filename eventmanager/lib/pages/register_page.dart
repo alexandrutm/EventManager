@@ -1,5 +1,4 @@
-import 'dart:typed_data';
-import 'package:eventmanager/components/TextFieldInput.dart';
+import 'package:eventmanager/components/text_field_input.dart';
 import 'package:eventmanager/components/my_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,7 +16,9 @@ class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
 
   @override
-  _SignupScreenState createState() => _SignupScreenState();
+  State<SignupScreen> createState() {
+    return _SignupScreenState();
+  }
 }
 
 class _SignupScreenState extends State<SignupScreen> {
@@ -61,20 +62,22 @@ class _SignupScreenState extends State<SignupScreen> {
         _isLoading = false;
       });
       // navigate to the home screen
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const ResponsiveLayout(
-            mobileScreenLayout: MobileScreenLayout(),
-            webScreenLayout: WebScreenLayout(),
+      if (context.mounted) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const ResponsiveLayout(
+              mobileScreenLayout: MobileScreenLayout(),
+              webScreenLayout: WebScreenLayout(),
+            ),
           ),
-        ),
-      );
+        );
+      }
     } else {
       setState(() {
         _isLoading = false;
       });
       // show the error
-      showSnackBar(context, res);
+      // showSnackBar(context, res);
     }
   }
 
@@ -87,7 +90,7 @@ class _SignupScreenState extends State<SignupScreen> {
         _image = im;
       });
     } catch (err) {
-      print(err);
+      //print(err);
     }
   }
 

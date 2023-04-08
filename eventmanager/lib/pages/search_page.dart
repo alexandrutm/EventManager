@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:eventmanager/pages/profile_page.dart';
-import 'package:eventmanager/utils/colors.dart';
 import 'package:eventmanager/utils/global_variable.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -21,20 +20,16 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: mobileBkgColor,
         title: Form(
           child: TextFormField(
-            style: TextStyle(color: primaryColorBlack),
             controller: searchController,
             decoration: const InputDecoration(
               hintText: 'Search for a user...',
-              hintStyle: TextStyle(color: primaryColorBlack),
             ),
             onFieldSubmitted: (String _) {
               setState(() {
                 isShowUsers = true;
               });
-              print(_);
             },
           ),
         ),

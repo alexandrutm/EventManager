@@ -7,16 +7,17 @@ import 'package:eventmanager/responsive/web_screen_layout.dart';
 import 'package:eventmanager/pages/register_page.dart';
 import 'package:eventmanager/utils/colors.dart';
 import 'package:eventmanager/utils/global_variable.dart';
-import 'package:eventmanager/utils/utils.dart';
 
 import '../components/my_button.dart';
-import '../components/TextFieldInput.dart';
+import '../components/text_field_input.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  State<LoginScreen> createState() {
+    return _LoginScreenState();
+  }
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -39,15 +40,16 @@ class _LoginScreenState extends State<LoginScreen> {
     String res = await AuthMethods.loginUser(
         email: _emailController.text, password: _passwordController.text);
     if (res == 'success') {
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (context) => const ResponsiveLayout(
-              mobileScreenLayout: MobileScreenLayout(),
-              webScreenLayout: WebScreenLayout(),
+      if (context.mounted) {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) => const ResponsiveLayout(
+                mobileScreenLayout: MobileScreenLayout(),
+                webScreenLayout: WebScreenLayout(),
+              ),
             ),
-          ),
-          (route) => false);
-
+            (route) => false);
+      }
       setState(() {
         _isLoading = false;
       });
@@ -55,7 +57,6 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         _isLoading = false;
       });
-      showSnackBar(context, res);
     }
   }
 
@@ -97,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   // email textfield
                   Padding(
-                    padding: EdgeInsets.only(top: 100.0),
+                    padding: const EdgeInsets.only(top: 100.0),
                     child: TextFieldInput(
                       textInputType: TextInputType.emailAddress,
                       textEditingController: _emailController,
@@ -237,7 +238,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 }
                               } else {
                                 // show the error
-                                showSnackBar(context, res);
+                                // showSnackBar(context, res);
                               }
                               if (context.mounted) {
                                 setState(() {

@@ -26,11 +26,11 @@ class TextFieldInput extends StatelessWidget {
         keyboardType: textInputType,
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
+              borderSide: const BorderSide(color: Colors.white),
               borderRadius: BorderRadius.circular(20),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: focusedBorderColor),
+              borderSide: const BorderSide(color: focusedBorderColor),
               borderRadius: BorderRadius.circular(20),
             ),
             fillColor: fillColor,

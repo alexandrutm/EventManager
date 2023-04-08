@@ -3,7 +3,6 @@ import 'package:eventmanager/providers/user_provider.dart';
 import 'package:eventmanager/responsive/mobile_screen_layout.dart';
 import 'package:eventmanager/responsive/responsive_layout.dart';
 import 'package:eventmanager/responsive/web_screen_layout.dart';
-import 'package:eventmanager/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,6 +34,7 @@ class EventManager extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'EventManager',
         theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {

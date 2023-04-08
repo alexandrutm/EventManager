@@ -12,7 +12,9 @@ class AddPostScreen extends StatefulWidget {
   const AddPostScreen({Key? key}) : super(key: key);
 
   @override
-  _AddPostScreenState createState() => _AddPostScreenState();
+  State<AddPostScreen> createState() {
+    return _AddPostScreenState();
+  }
 }
 
 class _AddPostScreenState extends State<AddPostScreen> {
@@ -78,14 +80,15 @@ class _AddPostScreenState extends State<AddPostScreen> {
         setState(() {
           isLoading = false;
         });
-        showSnackBar(
-          context,
-          'Posted!',
-        );
+        // showSnackBar(
+        //   context,
+        //   'Posted!',
+        // );
         clearImage();
-      } else {
-        showSnackBar(context, res);
       }
+      //else {
+      //   showSnackBar(context, res);
+      // }
     } catch (err) {
       setState(() {
         isLoading = false;

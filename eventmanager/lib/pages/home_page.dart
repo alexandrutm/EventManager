@@ -1,11 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:eventmanager/utils/colors.dart';
 import 'package:eventmanager/utils/global_variable.dart';
 import 'package:eventmanager/components/post_card.dart';
-
-import '../providers/auth_methods.dart';
-import 'login_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

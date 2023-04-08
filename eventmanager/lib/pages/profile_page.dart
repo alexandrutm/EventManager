@@ -48,7 +48,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       builder: (context) => DraggableScrollableSheet(
         expand: false,
-        initialChildSize: 0.5,
+        initialChildSize: 0.41,
         maxChildSize: 0.9,
         minChildSize: 0.28,
         builder: (context, scrollController) => SingleChildScrollView(
@@ -230,11 +230,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         DocumentSnapshot snap =
                             (snapshot.data! as dynamic).docs[index];
 
-                        return Container(
-                          child: Image(
-                            image: NetworkImage(snap['postUrl']),
-                            fit: BoxFit.cover,
-                          ),
+                        return Image(
+                          image: NetworkImage(snap['postUrl']),
+                          fit: BoxFit.cover,
                         );
                       },
                     );

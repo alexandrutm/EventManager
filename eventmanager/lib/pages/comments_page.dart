@@ -9,11 +9,13 @@ import 'package:eventmanager/components/comment_card.dart';
 import 'package:provider/provider.dart';
 
 class CommentsScreen extends StatefulWidget {
-  final postId;
+  final dynamic postId;
   const CommentsScreen({Key? key, required this.postId}) : super(key: key);
 
   @override
-  _CommentsScreenState createState() => _CommentsScreenState();
+  State<CommentsScreen> createState() {
+    return _CommentsScreenState();
+  }
 }
 
 class _CommentsScreenState extends State<CommentsScreen> {
@@ -32,7 +34,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
       );
 
       if (res != 'success') {
-        showSnackBar(context, res);
+        //showSnackBar(context, res);
       }
       setState(() {
         commentEditingController.text = "";

@@ -7,7 +7,7 @@ class IntroPage2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.black,
-      child: Center(
+      child: const Center(
         child: Text("Page 2"),
       ),
     );

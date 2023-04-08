@@ -18,7 +18,7 @@ class SettingsPage extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Positioned(
-            top: 5,
+            top: 8,
             child: Container(
               width: 60,
               height: 7,
@@ -30,16 +30,15 @@ class SettingsPage extends StatelessWidget {
           Column(
             children: [
               SettingsGroup(
-                title: '',
+                title: 'General',
                 children: <Widget>[
                   const AccountSettings(),
                   const NotificationSettings(),
-                  buildDarkMode(),
                   buildLogout(context),
                 ],
               ),
               SettingsGroup(
-                title: '',
+                title: 'Feedback',
                 children: <Widget>[
                   buildSendFeedback(context),
                   buildReportBug(context),
@@ -50,12 +49,12 @@ class SettingsPage extends StatelessWidget {
         ]);
   }
 
-  Widget buildDarkMode() => SwitchSettingsTile(
-        title: 'Dark Mode',
-        settingKey: keyDarkMode,
-        leading: const IconWidget(icon: Icons.dark_mode, color: Colors.blue),
-        onChange: (isDarkMode) {},
-      );
+  // Widget buildDarkMode() => SwitchSettingsTile(
+  //       title: 'Dark Mode',
+  //       settingKey: keyDarkMode,
+  //       leading: const IconWidget(icon: Icons.dark_mode, color: Colors.blue),
+  //       onChange: (isDarkMode) {},
+  //     );
 
   Widget buildLogout(BuildContext aContext) => SimpleSettingsTile(
         title: 'Logout',
@@ -65,25 +64,27 @@ class SettingsPage extends StatelessWidget {
         ),
         onTap: () async {
           await AuthMethods().signOut();
-          Navigator.of(aContext).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => const LoginScreen(),
-            ),
-          );
+          if (aContext.mounted) {
+            Navigator.of(aContext).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => const LoginScreen(),
+              ),
+            );
+          }
         },
       );
 
   Widget buildReportBug(BuildContext context) => SimpleSettingsTile(
         title: 'Report A Bug',
         subtitle: '',
-        leading: IconWidget(icon: Icons.bug_report, color: Colors.blue),
+        leading: const IconWidget(icon: Icons.bug_report, color: Colors.blue),
         onTap: () {},
       );
 
-  Widget buildSendFeedback(BuildContext context) => SimpleSettingsTile(
+  Widget buildSendFeedback(BuildContext aContext) => SimpleSettingsTile(
         title: 'Send Feedback',
         subtitle: '',
-        leading: IconWidget(icon: Icons.thumb_up, color: Colors.blue),
+        leading: const IconWidget(icon: Icons.thumb_up, color: Colors.blue),
         onTap: () {},
       );
 }

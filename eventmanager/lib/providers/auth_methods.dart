@@ -126,7 +126,7 @@ class AuthMethods {
             .set(user.toJson());
         return "success";
       } catch (e) {
-        print(e);
+        //print(e);
       }
     } else {
       final GoogleSignIn googleSignIn = GoogleSignIn();
