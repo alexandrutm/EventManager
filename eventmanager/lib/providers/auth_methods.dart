@@ -17,7 +17,15 @@ class AuthMethods {
     DocumentSnapshot documentSnapshot =
         await _firestore.collection('users').doc(currentUser.uid).get();
 
-    return model.User.fromSnap(documentSnapshot);
+    if (documentSnapshot.exists) return model.User.fromSnap(documentSnapshot);
+
+    return const model.User(
+        mFirstName: "mFirstName",
+        mLastName: "",
+        uid: "",
+        email: "",
+        followers: [],
+        following: []);
   }
 
   // Signing Up User
