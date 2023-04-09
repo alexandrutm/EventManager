@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:eventmanager/utils/global_variable.dart';
 import 'package:eventmanager/components/post_card.dart';
+import 'settings/settings_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,6 +12,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  void _showModalBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(30),
+        ),
+      ),
+      builder: (context) => DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.41,
+        maxChildSize: 0.9,
+        minChildSize: 0.28,
+        builder: (context, scrollController) => SingleChildScrollView(
+          controller: scrollController,
+          child: const SettingsPage(),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -28,6 +51,13 @@ class _HomePageState extends State<HomePage> {
                     fontSize: 32,
                     fontWeight: FontWeight.bold),
               ),
+              actions: [
+                IconButton(
+                    icon: const Icon(
+                      Icons.menu,
+                    ),
+                    onPressed: () => _showModalBottomSheet(context)),
+              ],
             ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('posts').snapshots(),

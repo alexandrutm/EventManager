@@ -41,6 +41,6 @@ class AccountSettings extends StatelessWidget {
 
   Widget buildChangePhoto() => ModalSettingsTile(
         title: 'Change photo',
-        children: [],
+        children: const [],
       );
 }
