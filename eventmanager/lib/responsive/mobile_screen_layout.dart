@@ -1,6 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import "package:eventmanager/utils/global_variable.dart";
+
+import '../pages/add_post_page.dart';
+import '../pages/home_page.dart';
+import '../pages/profile_page.dart';
+import '../pages/search_page.dart';
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({Key? key}) : super(key: key);
@@ -42,7 +47,15 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
       body: PageView(
         controller: pageController,
         onPageChanged: onPageChanged,
-        children: homeScreenItems,
+        children: <Widget>[
+          const HomePage(),
+          const SearchScreen(),
+          const AddPostScreen(),
+          const Text('notifications'),
+          ProfilePage(
+            uid: FirebaseAuth.instance.currentUser!.uid,
+          ),
+        ],
       ),
       bottomNavigationBar: CupertinoTabBar(
         items: const <BottomNavigationBarItem>[

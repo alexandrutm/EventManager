@@ -1,7 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:eventmanager/utils/colors.dart';
-import 'package:eventmanager/utils/global_variable.dart';
+
+import '../pages/add_post_page.dart';
+import '../pages/home_page.dart';
+import '../pages/profile_page.dart';
+import '../pages/search_page.dart';
 
 class WebScreenLayout extends StatefulWidget {
   const WebScreenLayout({Key? key}) : super(key: key);
@@ -93,7 +98,15 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
         onPageChanged: onPageChanged,
-        children: homeScreenItems,
+        children: <Widget>[
+          const HomePage(),
+          const SearchScreen(),
+          const AddPostScreen(),
+          const Text('notifications'),
+          ProfilePage(
+            uid: FirebaseAuth.instance.currentUser!.uid,
+          ),
+        ],
       ),
     );
   }
