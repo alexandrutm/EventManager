@@ -4,6 +4,8 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:eventmanager/pages/profile_page.dart';
 import 'package:eventmanager/utils/global_variable.dart';
 
+import '../utils/colors.dart';
+
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
 
@@ -33,11 +35,13 @@ class _SearchScreenState extends State<SearchScreen> {
 }
 
 class UserSearchDelegate extends SearchDelegate<String> {
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: const Icon(Icons.clear),
+        icon: Icon(Icons.clear),
         onPressed: () {
           query = '';
         },
@@ -48,7 +52,7 @@ class UserSearchDelegate extends SearchDelegate<String> {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.arrow_back),
+      icon: Icon(Icons.arrow_back),
       onPressed: () {
         close(context, '');
       },
@@ -57,37 +61,48 @@ class UserSearchDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return FutureBuilder<List<Map<String, dynamic>>>(
+    return FutureBuilder<QuerySnapshot>(
       future: searchForUsers(query),
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
             child: CircularProgressIndicator(),
           );
+        } else if (snapshot.hasData) {
+          final List<DocumentSnapshot> documents = snapshot.data!.docs;
+          return ListView.builder(
+            itemCount: documents.length,
+            itemBuilder: (context, index) {
+              final String name =
+                  '${documents[index].get('firstname')} ${documents[index].get('lastname')}';
+              return ListTile(
+                title: Text(name),
+                onTap: () {
+                  close(context, name);
+                },
+              );
+            },
+          );
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
+          );
+        } else {
+          return const Center(
+            child: Text('No results found'),
+          );
         }
-
-        final List<Map<String, dynamic>> users = snapshot.data!;
-
-        return ListView.builder(
-          itemCount: users.length,
-          itemBuilder: (context, index) {
-            final String name =
-                '${users[index]['firstname']} ${users[index]['lastname']}';
-            return ListTile(
-              title: Text(name),
-              onTap: () {
-                close(context, name);
-              },
-            );
-          },
-        );
       },
     );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return FutureBuilder<List<Map<String, dynamic>>>(
+    if (query.isEmpty) {
+      return Container();
+    }
+
+    return FutureBuilder<QuerySnapshot>(
       future: searchForUsers(query),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
@@ -96,13 +111,13 @@ class UserSearchDelegate extends SearchDelegate<String> {
           );
         }
 
-        final List<Map<String, dynamic>> users = snapshot.data!;
+        final List<DocumentSnapshot> documents = snapshot.data!.docs;
 
         return ListView.builder(
-          itemCount: users.length,
+          itemCount: documents.length,
           itemBuilder: (context, index) {
             final String name =
-                '${users[index]['firstName']} ${users[index]['lastName']}';
+                '${documents[index].get('firstname')} ${documents[index].get('lastname')}';
             return ListTile(
               title: Text(name),
               onTap: () {
@@ -115,18 +130,13 @@ class UserSearchDelegate extends SearchDelegate<String> {
     );
   }
 
-  Future<List<Map<String, dynamic>>> searchForUsers(String query) async {
-    final QuerySnapshot snapshot = await FirebaseFirestore.instance
+  Future<QuerySnapshot> searchForUsers(String query) async {
+    final QuerySnapshot snapshot = await firestore
         .collection('users')
         .where('firstname', isGreaterThanOrEqualTo: query)
-        .where('firstname', isLessThan: '${query}z')
+        .where('lastname', isLessThan: query + 'z')
         .get();
 
-    final List<Map<String, dynamic>> users = snapshot.docs
-        .map((DocumentSnapshot document) =>
-            document.data() as Map<String, dynamic>)
-        .toList();
-
-    return users;
+    return snapshot;
   }
 }
