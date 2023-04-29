@@ -14,6 +14,9 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showSearch(context: context, delegate: UserSearchDelegate());
+    });
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search...'),
@@ -73,7 +76,13 @@ class UserSearchDelegate extends SearchDelegate<String> {
               return ListTile(
                 title: Text(name),
                 onTap: () {
-                  close(context, name);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ProfilePage(uid: documents[index].id),
+                    ),
+                  );
                 },
               );
             },
@@ -116,7 +125,12 @@ class UserSearchDelegate extends SearchDelegate<String> {
             return ListTile(
               title: Text(name),
               onTap: () {
-                close(context, name);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfilePage(uid: documents[index].id),
+                  ),
+                );
               },
             );
           },
