@@ -1,10 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:eventmanager/pages/profile_page.dart';
-import 'package:eventmanager/utils/global_variable.dart';
-
-import '../utils/colors.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -41,7 +36,7 @@ class UserSearchDelegate extends SearchDelegate<String> {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.clear),
+        icon: const Icon(Icons.clear),
         onPressed: () {
           query = '';
         },
@@ -52,7 +47,7 @@ class UserSearchDelegate extends SearchDelegate<String> {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_back),
+      icon: const Icon(Icons.arrow_back),
       onPressed: () {
         close(context, '');
       },
@@ -134,7 +129,7 @@ class UserSearchDelegate extends SearchDelegate<String> {
     final QuerySnapshot snapshot = await firestore
         .collection('users')
         .where('firstname', isGreaterThanOrEqualTo: query)
-        .where('lastname', isLessThan: query + 'z')
+        .where('firstname', isLessThan: '${query}z')
         .get();
 
     return snapshot;
