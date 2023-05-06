@@ -3,7 +3,6 @@ import 'package:eventmanager/pages/settings/settings_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:eventmanager/resources/firestore_methods.dart';
-import 'package:eventmanager/utils/utils.dart';
 import 'package:eventmanager/components/follow_button.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -66,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
     try {
       var userSnap = await FirebaseFirestore.instance
           .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .doc(widget.uid)
           .get();
 
       // get post lENGTH
@@ -84,10 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
           .contains(FirebaseAuth.instance.currentUser!.uid);
       setState(() {});
     } catch (e) {
-      showSnackBar(
-        context,
-        e.toString(),
-      );
+      //
     }
     setState(() {
       isLoading = false;

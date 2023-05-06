@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eventmanager/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -142,8 +143,7 @@ class UserSearchDelegate extends SearchDelegate<String> {
   Future<QuerySnapshot> searchForUsers(String query) async {
     final QuerySnapshot snapshot = await firestore
         .collection('users')
-        .where('firstname', isGreaterThanOrEqualTo: query)
-        .where('firstname', isLessThan: '${query}z')
+        .where('fullname', arrayContains: query.toLowerCase())
         .get();
 
     return snapshot;

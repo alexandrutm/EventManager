@@ -51,7 +51,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           const HomePage(),
           const SearchScreen(),
           const AddPostScreen(),
-          const Text('notifications'),
+          const Text('Upcoming events'),
           ProfilePage(
             uid: FirebaseAuth.instance.currentUser!.uid,
           ),
@@ -76,7 +76,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.favorite,
+              Icons.upcoming,
             ),
           ),
           BottomNavigationBarItem(

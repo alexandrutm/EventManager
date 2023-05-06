@@ -49,6 +49,7 @@ dependencies:
   uuid: ^3.0.5
   flutter_settings_screens: ^0.3.3-null-safety+2
   lottie: ^2.1.0
+  string_similarity: ^2.0.0
 
 dev_dependencies:
   flutter_test:
