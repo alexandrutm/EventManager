@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:eventmanager/utils/global_variable.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -75,15 +76,14 @@ class _CreateEventPageState extends State<CreateEventPage> {
     showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) {
-        return Theme(
-          data: ThemeData.light(),
-          child: Container(
-            height: 300,
+        return SizedBox(
+          height: 300,
+          child: CupertinoPopupSurface(
             child: CupertinoDatePicker(
               mode: CupertinoDatePickerMode.date,
               initialDateTime: DateTime.now(),
-              minimumDate: DateTime.now().subtract(Duration(days: 365)),
-              maximumDate: DateTime.now().add(Duration(days: 365)),
+              minimumDate: DateTime.now().subtract(const Duration(days: 365)),
+              maximumDate: DateTime.now().add(const Duration(days: 365)),
               onDateTimeChanged: (DateTime newDateTime) {
                 setState(() {
                   _selectedStartDate = newDateTime;
@@ -101,16 +101,18 @@ class _CreateEventPageState extends State<CreateEventPage> {
     showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) {
-        return Container(
+        return SizedBox(
           height: 200,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.time,
-            initialDateTime: DateTime.now(),
-            onDateTimeChanged: (DateTime newDateTime) {
-              setState(() {
-                _selectedTime = TimeOfDay.fromDateTime(newDateTime);
-              });
-            },
+          child: CupertinoPopupSurface(
+            child: CupertinoDatePicker(
+              mode: CupertinoDatePickerMode.time,
+              initialDateTime: DateTime.now(),
+              onDateTimeChanged: (DateTime newDateTime) {
+                setState(() {
+                  _selectedTime = TimeOfDay.fromDateTime(newDateTime);
+                });
+              },
+            ),
           ),
         );
       },
@@ -144,7 +146,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Event Created'),
+        title: const Text('Event Created'),
         content: Text('The event "$title" has been created.'),
         actions: [
           TextButton(
@@ -152,7 +154,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
               Navigator.of(context).pop();
               // Optionally, you can navigate to a different page here
             },
-            child: Text('OK'),
+            child: const Text('OK'),
           ),
         ],
       ),

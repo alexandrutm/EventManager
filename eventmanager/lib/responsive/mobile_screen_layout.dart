@@ -76,7 +76,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.upcoming,
+              Icons.calendar_month,
             ),
           ),
           BottomNavigationBarItem(
