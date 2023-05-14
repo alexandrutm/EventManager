@@ -1,11 +1,10 @@
-import 'dart:typed_data';
-
-import 'package:eventmanager/utils/global_variable.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'dart:io';
 
+import '../components/repetition_button.dart';
 import '../utils/utils.dart';
 
 class CreateEventPage extends StatefulWidget {
@@ -22,7 +21,11 @@ class _CreateEventPageState extends State<CreateEventPage> {
   TextEditingController _descriptionController = TextEditingController();
   DateTime _selectedStartDate = DateTime.now();
   DateTime _selectedEndDate = DateTime.now();
-  TimeOfDay _selectedTime = TimeOfDay.now();
+  TimeOfDay _selectedStartTime = TimeOfDay.now();
+  TimeOfDay _selectedEndTime = TimeOfDay.now().replacing(
+    hour: TimeOfDay.now().hour + 1,
+    minute: TimeOfDay.now().minute,
+  );
   File? _imageFile;
 
   @override
@@ -72,7 +75,38 @@ class _CreateEventPageState extends State<CreateEventPage> {
     );
   }
 
-  void _selectDateRange() {
+  Future<void> _selectRepetition(BuildContext parentContext) async {
+    return showDialog(
+      context: parentContext,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          children: <Widget>[
+            SimpleDialogOption(
+                padding: const EdgeInsets.all(20),
+                child: const Text('Does not repeat'),
+                onPressed: () async {
+                  Navigator.pop(context);
+                }),
+            SimpleDialogOption(
+                padding: const EdgeInsets.all(20),
+                child: const Text('Every day'),
+                onPressed: () async {
+                  Navigator.pop(context);
+                }),
+            SimpleDialogOption(
+              padding: const EdgeInsets.all(20),
+              child: const Text("Every week"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  void _selectDateRange(String aButtonType) {
     showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) {
@@ -82,12 +116,13 @@ class _CreateEventPageState extends State<CreateEventPage> {
             child: CupertinoDatePicker(
               mode: CupertinoDatePickerMode.date,
               initialDateTime: DateTime.now(),
-              minimumDate: DateTime.now().subtract(const Duration(days: 365)),
-              maximumDate: DateTime.now().add(const Duration(days: 365)),
               onDateTimeChanged: (DateTime newDateTime) {
                 setState(() {
-                  _selectedStartDate = newDateTime;
-                  _selectedEndDate = newDateTime;
+                  if (aButtonType == 'start') {
+                    _selectedStartDate = newDateTime;
+                  } else if (aButtonType == 'end') {
+                    _selectedEndDate = newDateTime;
+                  }
                 });
               },
             ),
@@ -97,7 +132,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
     );
   }
 
-  void _selectTime() {
+  void _selectTime(String aButtonType) {
     showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) {
@@ -109,7 +144,11 @@ class _CreateEventPageState extends State<CreateEventPage> {
               initialDateTime: DateTime.now(),
               onDateTimeChanged: (DateTime newDateTime) {
                 setState(() {
-                  _selectedTime = TimeOfDay.fromDateTime(newDateTime);
+                  if (aButtonType == 'start') {
+                    _selectedStartTime = TimeOfDay.fromDateTime(newDateTime);
+                  } else {
+                    _selectedEndTime = TimeOfDay.fromDateTime(newDateTime);
+                  }
                 });
               },
             ),
@@ -128,16 +167,16 @@ class _CreateEventPageState extends State<CreateEventPage> {
       _selectedStartDate.year,
       _selectedStartDate.month,
       _selectedStartDate.day,
-      _selectedTime.hour,
-      _selectedTime.minute,
+      _selectedStartTime.hour,
+      _selectedStartTime.minute,
     );
 
     DateTime eventEndTime = DateTime(
       _selectedEndDate.year,
       _selectedEndDate.month,
       _selectedEndDate.day,
-      _selectedTime.hour,
-      _selectedTime.minute,
+      _selectedStartTime.hour,
+      _selectedStartTime.minute,
     );
 
     // Implement your logic here to create the event
@@ -207,11 +246,11 @@ class _CreateEventPageState extends State<CreateEventPage> {
                     maxLines: null,
                   ),
                   const SizedBox(height: 12.0),
-                  GestureDetector(
-                    onTap: _selectDateRange,
-                    child: Row(
-                      children: [
-                        Expanded(
+                  Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () => _selectDateRange("start"),
                           child: TextFormField(
                             enabled: false,
                             decoration: const InputDecoration(
@@ -219,12 +258,37 @@ class _CreateEventPageState extends State<CreateEventPage> {
                               suffixIcon: Icon(Icons.calendar_today),
                             ),
                             controller: TextEditingController(
-                              text: _selectedStartDate.toString().split(' ')[0],
+                              text: DateFormat('MMMM dd, yyyy')
+                                  .format(_selectedStartDate),
                             ),
                           ),
                         ),
-                        const SizedBox(width: 12.0),
-                        Expanded(
+                      ),
+                      const SizedBox(width: 12.0),
+                      SizedBox(
+                        width: 120,
+                        child: GestureDetector(
+                          onTap: () => _selectTime("start"),
+                          child: TextFormField(
+                            enabled: false,
+                            decoration: const InputDecoration(
+                              labelText: 'Start Time',
+                              suffixIcon: Icon(Icons.access_time),
+                            ),
+                            controller: TextEditingController(
+                              text: _selectedStartTime.format(context),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12.0),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () => _selectDateRange("end"),
                           child: TextFormField(
                             enabled: false,
                             decoration: const InputDecoration(
@@ -232,26 +296,30 @@ class _CreateEventPageState extends State<CreateEventPage> {
                               suffixIcon: Icon(Icons.calendar_today),
                             ),
                             controller: TextEditingController(
-                              text: _selectedEndDate.toString().split(' ')[0],
+                              text: DateFormat('MMMM dd, yyyy')
+                                  .format(_selectedEndDate),
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 12.0),
-                  GestureDetector(
-                    onTap: _selectTime,
-                    child: TextFormField(
-                      enabled: false,
-                      decoration: const InputDecoration(
-                        labelText: 'Time',
-                        suffixIcon: Icon(Icons.access_time),
                       ),
-                      controller: TextEditingController(
-                        text: _selectedTime.format(context),
+                      const SizedBox(width: 12.0),
+                      SizedBox(
+                        width: 120,
+                        child: GestureDetector(
+                          onTap: () => _selectTime("end"),
+                          child: TextFormField(
+                            enabled: false,
+                            decoration: const InputDecoration(
+                              labelText: 'End Time',
+                              suffixIcon: Icon(Icons.access_time),
+                            ),
+                            controller: TextEditingController(
+                              text: _selectedEndTime.format(context),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),
