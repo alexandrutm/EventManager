@@ -167,95 +167,104 @@ class _CreateEventPageState extends State<CreateEventPage> {
       appBar: AppBar(
         title: const Text('Create Event'),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            GestureDetector(
-              onTap: () => _selectImage(context),
-              child: SizedBox(
-                width: double.infinity,
-                height: 200,
-                child: _imageFile != null
-                    ? Image.file(
-                        _imageFile!,
-                        fit: BoxFit.cover,
-                      )
-                    : const Icon(
-                        Icons.camera_alt,
-                        size: 50,
-                      ),
-              ),
-            ),
-            const SizedBox(height: 12.0),
-            TextFormField(
-              controller: _titleController,
-              decoration: const InputDecoration(
-                labelText: "Title",
-              ),
-            ),
-            const SizedBox(height: 12.0),
-            TextFormField(
-              controller: _descriptionController,
-              decoration: const InputDecoration(
-                labelText: 'Description',
-              ),
-            ),
-            const SizedBox(height: 12.0),
-            GestureDetector(
-              onTap: _selectDateRange,
-              child: Row(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
                 children: [
-                  Expanded(
-                    child: TextFormField(
-                      enabled: false,
-                      decoration: const InputDecoration(
-                        labelText: 'Start Date',
-                        suffixIcon: Icon(Icons.calendar_today),
-                      ),
-                      controller: TextEditingController(
-                        text: _selectedStartDate.toString().split(' ')[0],
-                      ),
+                  GestureDetector(
+                    onTap: () => _selectImage(context),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 200,
+                      child: _imageFile != null
+                          ? Image.file(
+                              _imageFile!,
+                              fit: BoxFit.cover,
+                            )
+                          : const Icon(
+                              Icons.camera_alt,
+                              size: 50,
+                            ),
                     ),
                   ),
-                  const SizedBox(width: 12.0),
-                  Expanded(
+                  const SizedBox(height: 12.0),
+                  TextFormField(
+                    controller: _titleController,
+                    decoration: const InputDecoration(
+                      labelText: "Title",
+                    ),
+                  ),
+                  const SizedBox(height: 12.0),
+                  TextFormField(
+                    controller: _descriptionController,
+                    decoration: const InputDecoration(
+                      labelText: 'Description',
+                    ),
+                    maxLines: null,
+                  ),
+                  const SizedBox(height: 12.0),
+                  GestureDetector(
+                    onTap: _selectDateRange,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            enabled: false,
+                            decoration: const InputDecoration(
+                              labelText: 'Start Date',
+                              suffixIcon: Icon(Icons.calendar_today),
+                            ),
+                            controller: TextEditingController(
+                              text: _selectedStartDate.toString().split(' ')[0],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12.0),
+                        Expanded(
+                          child: TextFormField(
+                            enabled: false,
+                            decoration: const InputDecoration(
+                              labelText: 'End Date',
+                              suffixIcon: Icon(Icons.calendar_today),
+                            ),
+                            controller: TextEditingController(
+                              text: _selectedEndDate.toString().split(' ')[0],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 12.0),
+                  GestureDetector(
+                    onTap: _selectTime,
                     child: TextFormField(
                       enabled: false,
                       decoration: const InputDecoration(
-                        labelText: 'End Date',
-                        suffixIcon: Icon(Icons.calendar_today),
+                        labelText: 'Time',
+                        suffixIcon: Icon(Icons.access_time),
                       ),
                       controller: TextEditingController(
-                        text: _selectedEndDate.toString().split(' ')[0],
+                        text: _selectedTime.format(context),
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 12.0),
-            GestureDetector(
-              onTap: _selectTime,
-              child: TextFormField(
-                enabled: false,
-                decoration: const InputDecoration(
-                  labelText: 'Time',
-                  suffixIcon: Icon(Icons.access_time),
-                ),
-                controller: TextEditingController(
-                  text: _selectedTime.format(context),
-                ),
-              ),
-            ),
-            const SizedBox(height: 24.0),
-            ElevatedButton(
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ElevatedButton(
               onPressed: _createEvent,
               child: const Text('Create Event'),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
