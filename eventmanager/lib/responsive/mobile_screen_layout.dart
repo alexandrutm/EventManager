@@ -50,7 +50,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         children: <Widget>[
           const HomePage(),
           const SearchScreen(),
-          const AddPostScreen(),
+          const AddEventScreen(),
           const Text('Upcoming events'),
           ProfilePage(
             uid: FirebaseAuth.instance.currentUser!.uid,

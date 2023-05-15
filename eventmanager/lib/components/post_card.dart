@@ -35,7 +35,7 @@ class _PostCardState extends State<PostCard> {
   fetchCommentLen() async {
     try {
       QuerySnapshot snap = await FirebaseFirestore.instance
-          .collection('posts')
+          .collection('events')
           .doc(widget.snap['postId'])
           .collection('comments')
           .get();
@@ -230,7 +230,7 @@ class _PostCardState extends State<PostCard> {
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => CommentsScreen(
-                      postId: widget.snap['postId'].toString(),
+                      eventId: widget.snap['postId'].toString(),
                     ),
                   ),
                 ),
@@ -300,7 +300,7 @@ class _PostCardState extends State<PostCard> {
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => CommentsScreen(
-                        postId: widget.snap['postId'].toString(),
+                        eventId: widget.snap['postId'].toString(),
                       ),
                     ),
                   ),

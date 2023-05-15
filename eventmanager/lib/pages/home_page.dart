@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+        stream: FirebaseFirestore.instance.collection('events').snapshots(),
         builder: (context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -75,9 +75,9 @@ class _HomePageState extends State<HomePage> {
                 horizontal: width > webScreenSize ? width * 0.3 : 0,
                 vertical: width > webScreenSize ? 15 : 0,
               ),
-              child: PostCard(
-                snap: snapshot.data!.docs[index].data(),
-              ),
+              // child: PostCard(
+              //   snap: snapshot.data!.docs[index].data(),
+              // ),
             ),
           );
         },

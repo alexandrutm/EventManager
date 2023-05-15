@@ -69,12 +69,12 @@ class _ProfilePageState extends State<ProfilePage> {
           .get();
 
       // get post lENGTH
-      var postSnap = await FirebaseFirestore.instance
-          .collection('posts')
+      var eventSnap = await FirebaseFirestore.instance
+          .collection('events')
           .where('uid', isEqualTo: widget.uid)
           .get();
 
-      postLen = postSnap.docs.length;
+      postLen = eventSnap.docs.length;
       userData = userSnap.data()!;
       followers = userSnap.data()!['followers'].length;
       following = userSnap.data()!['following'].length;
@@ -202,7 +202,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 const Divider(),
                 FutureBuilder(
                   future: FirebaseFirestore.instance
-                      .collection('posts')
+                      .collection('events')
                       .where('uid', isEqualTo: widget.uid)
                       .get(),
                   builder: (context, snapshot) {

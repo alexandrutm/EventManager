@@ -9,8 +9,8 @@ import 'package:eventmanager/components/comment_card.dart';
 import 'package:provider/provider.dart';
 
 class CommentsScreen extends StatefulWidget {
-  final dynamic postId;
-  const CommentsScreen({Key? key, required this.postId}) : super(key: key);
+  final dynamic eventId;
+  const CommentsScreen({Key? key, required this.eventId}) : super(key: key);
 
   @override
   State<CommentsScreen> createState() {
@@ -26,7 +26,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
       String profilePic) async {
     try {
       String res = await FireStoreMethods().postComment(
-        widget.postId,
+        widget.eventId,
         commentEditingController.text,
         uid,
         aFirstName,
@@ -63,7 +63,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('posts')
-            .doc(widget.postId)
+            .doc(widget.eventId)
             .collection('comments')
             .snapshots(),
         builder: (context,

@@ -101,7 +101,7 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
         children: <Widget>[
           const HomePage(),
           const SearchScreen(),
-          const AddPostScreen(),
+          const AddEventScreen(),
           const Text('notifications'),
           ProfilePage(
             uid: FirebaseAuth.instance.currentUser!.uid,

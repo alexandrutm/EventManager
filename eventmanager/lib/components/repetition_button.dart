@@ -90,3 +90,35 @@ class _EventRepetitionButtonState extends State<EventRepetitionButton> {
     );
   }
 }
+
+
+ // Future<void> _selectRepetition(BuildContext parentContext) async {
+  //   return showDialog(
+  //     context: parentContext,
+  //     builder: (BuildContext context) {
+  //       return SimpleDialog(
+  //         children: <Widget>[
+  //           SimpleDialogOption(
+  //               padding: const EdgeInsets.all(20),
+  //               child: const Text('Does not repeat'),
+  //               onPressed: () async {
+  //                 Navigator.pop(context);
+  //               }),
+  //           SimpleDialogOption(
+  //               padding: const EdgeInsets.all(20),
+  //               child: const Text('Every day'),
+  //               onPressed: () async {
+  //                 Navigator.pop(context);
+  //               }),
+  //           SimpleDialogOption(
+  //             padding: const EdgeInsets.all(20),
+  //             child: const Text("Every week"),
+  //             onPressed: () {
+  //               Navigator.pop(context);
+  //             },
+  //           )
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }

@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'dart:io';
 
-import '../components/repetition_button.dart';
 import '../utils/utils.dart';
 
 class CreateEventPage extends StatefulWidget {
@@ -65,37 +64,6 @@ class _CreateEventPageState extends State<CreateEventPage> {
             SimpleDialogOption(
               padding: const EdgeInsets.all(20),
               child: const Text("Cancel"),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            )
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _selectRepetition(BuildContext parentContext) async {
-    return showDialog(
-      context: parentContext,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          children: <Widget>[
-            SimpleDialogOption(
-                padding: const EdgeInsets.all(20),
-                child: const Text('Does not repeat'),
-                onPressed: () async {
-                  Navigator.pop(context);
-                }),
-            SimpleDialogOption(
-                padding: const EdgeInsets.all(20),
-                child: const Text('Every day'),
-                onPressed: () async {
-                  Navigator.pop(context);
-                }),
-            SimpleDialogOption(
-              padding: const EdgeInsets.all(20),
-              child: const Text("Every week"),
               onPressed: () {
                 Navigator.pop(context);
               },
