@@ -1,9 +1,13 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'dart:io';
+import 'package:provider/provider.dart';
 
+import '../providers/user_provider.dart';
+import '../resources/firestore_methods.dart';
 import '../utils/utils.dart';
 
 class CreateEventPage extends StatefulWidget {
@@ -16,8 +20,8 @@ class CreateEventPage extends StatefulWidget {
 }
 
 class _CreateEventPageState extends State<CreateEventPage> {
-  TextEditingController _titleController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   DateTime _selectedStartDate = DateTime.now();
   DateTime _selectedEndDate = DateTime.now();
   TimeOfDay _selectedStartTime = TimeOfDay.now();
@@ -25,7 +29,8 @@ class _CreateEventPageState extends State<CreateEventPage> {
     hour: TimeOfDay.now().hour + 1,
     minute: TimeOfDay.now().minute,
   );
-  File? _imageFile;
+  Uint8List? _imageFile;
+  bool isLoading = false;
 
   @override
   void dispose() {
@@ -48,7 +53,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                   Navigator.pop(context);
                   var file = await pickImage(ImageSource.camera);
                   setState(() {
-                    _imageFile = File(file.path);
+                    _imageFile = file;
                   });
                 }),
             SimpleDialogOption(
@@ -58,7 +63,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                   Navigator.of(context).pop();
                   var file = await pickImage(ImageSource.gallery);
                   setState(() {
-                    _imageFile = File(file.path);
+                    _imageFile = file;
                   });
                 }),
             SimpleDialogOption(
@@ -126,10 +131,11 @@ class _CreateEventPageState extends State<CreateEventPage> {
     );
   }
 
-  void _createEvent() {
-    String title = _titleController.text;
-    String description = _descriptionController.text;
+  void _createEvent() async {
+    final UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
 
+    String title = _titleController.text;
     // Combine selected date and time
     DateTime eventStartTime = DateTime(
       _selectedStartDate.year,
@@ -146,6 +152,44 @@ class _CreateEventPageState extends State<CreateEventPage> {
       _selectedStartTime.hour,
       _selectedStartTime.minute,
     );
+
+    setState(() {
+      isLoading = true;
+    });
+    // start the loading
+    try {
+      // upload to storage and db
+      String res = await FireStoreMethods().uploadEvent(
+          _titleController.text,
+          _descriptionController.text,
+          _imageFile!,
+          userProvider.getUser.uid,
+          "${userProvider.getUser.mFirstName} ${userProvider.getUser.mLastName}",
+          userProvider.getUser.photoUrl,
+          eventStartTime,
+          eventEndTime);
+      if (res == "success") {
+        setState(() {
+          isLoading = false;
+        });
+        // showSnackBar(
+        //   context,
+        //   'Posted!',
+        // );
+        // clearImage();
+      }
+      //else {
+      //   showSnackBar(context, res);
+      // }
+    } catch (err) {
+      setState(() {
+        isLoading = false;
+      });
+      showSnackBar(
+        context,
+        err.toString(),
+      );
+    }
 
     // Implement your logic here to create the event
     // Example: eventService.createEvent(title, description, eventStartTime, eventEndTime, _imageFile);
@@ -188,7 +232,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                       width: double.infinity,
                       height: 200,
                       child: _imageFile != null
-                          ? Image.file(
+                          ? Image.memory(
                               _imageFile!,
                               fit: BoxFit.cover,
                             )

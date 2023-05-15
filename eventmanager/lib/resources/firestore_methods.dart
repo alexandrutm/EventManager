@@ -3,22 +3,21 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventmanager/models/event.dart';
 import 'package:eventmanager/resources/storage_methods.dart';
-import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class FireStoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<String> uploadEvent(
-      String description,
-      Uint8List file,
-      String uid,
-      String username,
-      String profImage,
-      DateTime startDate,
-      DateTime endDate,
-      TimeOfDay startTime,
-      TimeOfDay endTime) async {
+    String title,
+    String description,
+    Uint8List file,
+    String uid,
+    String username,
+    String profImage,
+    DateTime startDate,
+    DateTime endDate,
+  ) async {
     // asking uid here because we dont want to make extra calls to firebase auth when we can just get from our state management
     String res = "Some error occurred";
     try {
@@ -26,18 +25,18 @@ class FireStoreMethods {
           await StorageMethods().uploadImageToStorage('events', file, true);
       String eventId = const Uuid().v1(); // creates unique id based on time
       Event post = Event(
-          description: description,
-          uid: uid,
-          username: username,
-          likes: [],
-          eventId: eventId,
-          datePublished: DateTime.now(),
-          postUrl: photoUrl,
-          profImage: profImage,
-          startDate: startDate,
-          endDate: endDate,
-          startTime: startTime,
-          endTime: endTime);
+        title: title,
+        description: description,
+        uid: uid,
+        username: username,
+        likes: [],
+        eventId: eventId,
+        datePublished: DateTime.now(),
+        postUrl: photoUrl,
+        profImage: profImage,
+        startDate: startDate,
+        endDate: endDate,
+      );
       _firestore.collection('events').doc(eventId).set(post.toJson());
       res = "success";
     } catch (err) {

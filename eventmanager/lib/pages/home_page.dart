@@ -75,9 +75,9 @@ class _HomePageState extends State<HomePage> {
                 horizontal: width > webScreenSize ? width * 0.3 : 0,
                 vertical: width > webScreenSize ? 15 : 0,
               ),
-              // child: PostCard(
-              //   snap: snapshot.data!.docs[index].data(),
-              // ),
+              child: PostCard(
+                snap: snapshot.data!.docs[index].data(),
+              ),
             ),
           );
         },
