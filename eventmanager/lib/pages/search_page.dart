@@ -15,9 +15,9 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      showSearch(context: context, delegate: UserSearchDelegate());
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   showSearch(context: context, delegate: UserSearchDelegate());
+    // });
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search...'),
