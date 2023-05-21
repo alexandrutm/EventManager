@@ -9,15 +9,15 @@ class FireStoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<String> uploadEvent(
-    String title,
-    String description,
-    Uint8List file,
-    String uid,
-    String username,
-    String profImage,
-    DateTime startDate,
-    DateTime endDate,
-  ) async {
+      String title,
+      String description,
+      Uint8List file,
+      String uid,
+      String username,
+      String profImage,
+      DateTime startDate,
+      DateTime endDate,
+      String location) async {
     // asking uid here because we dont want to make extra calls to firebase auth when we can just get from our state management
     String res = "Some error occurred";
     try {
@@ -36,6 +36,7 @@ class FireStoreMethods {
         profImage: profImage,
         startDate: startDate,
         endDate: endDate,
+        location: location,
       );
       _firestore.collection('events').doc(eventId).set(post.toJson());
       res = "success";

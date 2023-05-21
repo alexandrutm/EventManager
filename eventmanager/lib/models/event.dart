@@ -12,6 +12,7 @@ class Event {
   final String profImage;
   final DateTime startDate;
   final DateTime endDate;
+  final String location;
 
   const Event({
     required this.title,
@@ -25,6 +26,7 @@ class Event {
     required this.profImage,
     required this.startDate,
     required this.endDate,
+    required this.location,
   });
 
   static Event fromSnap(DocumentSnapshot snap) {
@@ -42,6 +44,7 @@ class Event {
       profImage: snapshot['profImage'],
       startDate: snapshot['startDate'],
       endDate: snapshot['endDate'],
+      location: snapshot['location'],
     );
   }
 
@@ -57,5 +60,6 @@ class Event {
         'profImage': profImage,
         'startDate': startDate,
         'endDate': endDate,
+        'location': location,
       };
 }

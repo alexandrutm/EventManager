@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const followBtnColor = Color.fromARGB(255, 172, 192, 242);
-const mobileBkgColor = Color.fromARGB(255, 111, 228, 233);
+const mobileBkgColor = Color.fromARGB(255, 33, 150, 243);
 const webBackgroundColor = Color.fromARGB(255, 185, 191, 200);
 const focusedBorderColor = Color.fromARGB(255, 0, 87, 241);
 const blueLinkColor = Color.fromARGB(255, 4, 109, 196);

@@ -22,6 +22,7 @@ class CreateEventPage extends StatefulWidget {
 class _CreateEventPageState extends State<CreateEventPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _locationController = TextEditingController();
   DateTime _selectedStartDate = DateTime.now();
   DateTime _selectedEndDate = DateTime.now();
   TimeOfDay _selectedStartTime = TimeOfDay.now();
@@ -167,7 +168,8 @@ class _CreateEventPageState extends State<CreateEventPage> {
           "${userProvider.getUser.mFirstName} ${userProvider.getUser.mLastName}",
           userProvider.getUser.photoUrl,
           eventStartTime,
-          eventEndTime);
+          eventEndTime,
+          _locationController.text);
       if (res == "success") {
         setState(() {
           isLoading = false;
@@ -296,42 +298,12 @@ class _CreateEventPageState extends State<CreateEventPage> {
                     ],
                   ),
                   const SizedBox(height: 12.0),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () => _selectDateRange("end"),
-                          child: TextFormField(
-                            enabled: false,
-                            decoration: const InputDecoration(
-                              labelText: 'End Date',
-                              suffixIcon: Icon(Icons.calendar_today),
-                            ),
-                            controller: TextEditingController(
-                              text: DateFormat('MMMM dd, yyyy')
-                                  .format(_selectedEndDate),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 12.0),
-                      SizedBox(
-                        width: 120,
-                        child: GestureDetector(
-                          onTap: () => _selectTime("end"),
-                          child: TextFormField(
-                            enabled: false,
-                            decoration: const InputDecoration(
-                              labelText: 'End Time',
-                              suffixIcon: Icon(Icons.access_time),
-                            ),
-                            controller: TextEditingController(
-                              text: _selectedEndTime.format(context),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                  TextField(
+                    controller: _locationController,
+                    decoration: const InputDecoration(
+                      hintText: 'Enter a location',
+                      suffixIcon: Icon(Icons.search),
+                    ),
                   ),
                 ],
               ),
