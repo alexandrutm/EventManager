@@ -39,26 +39,26 @@ class _HomePageState extends State<HomePage> {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: width > webScreenSize
-          ? null
-          : AppBar(
-              automaticallyImplyLeading: false,
-              centerTitle: false,
-              title: const Text(
-                'Event Manager',
-                style: TextStyle(
-                    fontFamily: 'Billabong',
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold),
-              ),
-              // actions: [
-              //   IconButton(
-              //       icon: const Icon(
-              //         Icons.menu,
-              //       ),
-              //       onPressed: () => _showModalBottomSheet(context)),
-              // ],
-            ),
+      // appBar: width > webScreenSize
+      //     ? null
+      //     : AppBar(
+      //         automaticallyImplyLeading: false,
+      //         centerTitle: false,
+      //         title: const Text(
+      //           'Event Manager',
+      //           style: TextStyle(
+      //               fontFamily: 'Billabong',
+      //               fontSize: 32,
+      //               fontWeight: FontWeight.bold),
+      //         ),
+      //         // actions: [
+      //         //   IconButton(
+      //         //       icon: const Icon(
+      //         //         Icons.menu,
+      //         //       ),
+      //         //       onPressed: () => _showModalBottomSheet(context)),
+      //         // ],
+      //       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('events').snapshots(),
         builder: (context,

@@ -78,6 +78,11 @@ class _PostCardState extends State<PostCard> {
       ),
       child: Column(
         children: [
+          Container(
+              padding: const EdgeInsets.symmetric(
+            vertical: 15,
+            horizontal: 8,
+          )),
           // HEADER SECTION OF THE POST
           Container(
             padding: const EdgeInsets.symmetric(
@@ -114,6 +119,47 @@ class _PostCardState extends State<PostCard> {
                   DateFormat.yMMMd()
                       .format(widget.snap['datePublished'].toDate()),
                 ),
+                // widget.snap['uid'].toString() == user.uid
+                //     ? IconButton(
+                //         onPressed: () {
+                //           showDialog(
+                //             useRootNavigator: false,
+                //             context: context,
+                //             builder: (context) {
+                //               return Dialog(
+                //                 child: ListView(
+                //                     padding: const EdgeInsets.symmetric(
+                //                         vertical: 16),
+                //                     shrinkWrap: true,
+                //                     children: [
+                //                       'Delete',
+                //                     ]
+                //                         .map(
+                //                           (e) => InkWell(
+                //                               child: Container(
+                //                                 padding:
+                //                                     const EdgeInsets.symmetric(
+                //                                         vertical: 12,
+                //                                         horizontal: 16),
+                //                                 child: Text(e),
+                //                               ),
+                //                               onTap: () {
+                //                                 deletePost(
+                //                                   widget.snap['postId']
+                //                                       .toString(),
+                //                                 );
+                //                                 // remove the dialog box
+                //                                 Navigator.of(context).pop();
+                //                               }),
+                //                         )
+                //                         .toList()),
+                //               );
+                //             },
+                //           );
+                //         },
+                //         icon: const Icon(Icons.more_vert),
+                //       )
+                //     : Container(),
               ],
             ),
           ),
@@ -240,7 +286,7 @@ class _PostCardState extends State<PostCard> {
                                   color: mobileBkgColor,
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                height: 50,
+                                height: 60,
                                 child: SingleChildScrollView(
                                   scrollDirection: Axis.vertical,
                                   child: Text(
@@ -248,6 +294,56 @@ class _PostCardState extends State<PostCard> {
                                     style: TextStyle(fontSize: 16),
                                   ),
                                 ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 8),
+                        // Place Container
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: mobileBkgColor,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                padding: EdgeInsets.all(8),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(Icons.place),
+                                    SizedBox(width: 4),
+                                    Text(
+                                      widget.snap['location'].toString(),
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: mobileBkgColor,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              height: 40,
+                              child: DropdownButton<String>(
+                                value: dropdownValue,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownValue = newValue!;
+                                  });
+                                },
+                                items: <String>[
+                                  'Going',
+                                  'Interested'
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
                               ),
                             ),
                           ],
@@ -293,31 +389,6 @@ class _PostCardState extends State<PostCard> {
                                     Text(
                                       DateFormat.jm().format(
                                           widget.snap['startDate'].toDate()),
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 8),
-                        Row(
-                          children: <Widget>[
-                            // Place Container
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: mobileBkgColor,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                padding: EdgeInsets.all(8),
-                                child: Row(
-                                  children: <Widget>[
-                                    Icon(Icons.place),
-                                    SizedBox(width: 4),
-                                    Text(
-                                      widget.snap['location'].toString(),
                                       style: TextStyle(fontSize: 16),
                                     ),
                                   ],
