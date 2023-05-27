@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+const darkBkgColor = Color.fromARGB(130, 48, 48, 48);
+const lightBkgColor = Color.fromARGB(130, 250, 250, 250);
+
 const followBtnColor = Color.fromARGB(255, 172, 192, 242);
 const mobileBkgColor = Color.fromARGB(255, 33, 150, 243);
 const webBackgroundColor = Color.fromARGB(255, 185, 191, 200);
