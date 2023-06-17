@@ -29,7 +29,7 @@ class FireStoreMethods {
         description: description,
         uid: uid,
         username: username,
-        likes: [],
+        attendees: [],
         eventId: eventId,
         datePublished: DateTime.now(),
         postUrl: photoUrl,
@@ -46,18 +46,19 @@ class FireStoreMethods {
     return res;
   }
 
-  Future<String> likePost(String eventId, String uid, List likes) async {
+  Future<String> attendToEvent(
+      String eventId, String uid, List attendees) async {
     String res = "Some error occurred";
     try {
-      if (likes.contains(uid)) {
-        // if the likes list contains the user uid, we need to remove it
+      if (attendees.contains(uid)) {
+        // if the attendees list contains the user uid, we need to remove it
         _firestore.collection('events').doc(eventId).update({
-          'likes': FieldValue.arrayRemove([uid])
+          'attendees': FieldValue.arrayRemove([uid])
         });
       } else {
-        // else we need to add uid to the likes array
+        // else we need to add uid to the attendees array
         _firestore.collection('events').doc(eventId).update({
-          'likes': FieldValue.arrayUnion([uid])
+          'attendees': FieldValue.arrayUnion([uid])
         });
       }
       res = 'success';

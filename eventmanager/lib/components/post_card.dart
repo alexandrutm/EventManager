@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:eventmanager/models/user.dart' as model;
 import 'package:eventmanager/providers/user_provider.dart';
@@ -25,6 +26,7 @@ class PostCard extends StatefulWidget {
 class _PostCardState extends State<PostCard> {
   int commentLen = 0;
   int interestedLen = 0;
+  int attendeesLen = 0;
   bool isLikeAnimating = false;
   bool isGoing = false; // Set this value based on user's selection
   bool isInterested = false; // Set this value based on user's selection
@@ -32,15 +34,20 @@ class _PostCardState extends State<PostCard> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.snap['attendees']
+        .contains(FirebaseAuth.instance.currentUser!.uid)) isGoing = true;
+
     fetchCommentLen();
     fetchInterestedLen();
+    fetchAttendeesLen();
   }
 
   fetchCommentLen() async {
     try {
       QuerySnapshot snap = await FirebaseFirestore.instance
           .collection('events')
-          .doc(widget.snap['postId'])
+          .doc(widget.snap['eventId'])
           .collection('comments')
           .get();
       commentLen = snap.docs.length;
@@ -62,7 +69,7 @@ class _PostCardState extends State<PostCard> {
     try {
       QuerySnapshot snap = await FirebaseFirestore.instance
           .collection('events')
-          .doc(widget.snap['postId'])
+          .doc(widget.snap['eventId'])
           .collection('comments')
           .get();
       commentLen = snap.docs.length;
@@ -80,9 +87,40 @@ class _PostCardState extends State<PostCard> {
     }
   }
 
-  deletePost(String postId) async {
+  fetchAttendeesLen() async {
     try {
-      await FireStoreMethods().deletePost(postId);
+      var snap = await FirebaseFirestore.instance
+          .collection('events')
+          .doc(widget.snap['eventId'])
+          .get();
+
+      if (snap.exists) {
+        var attendees = snap.data()!['attendees'];
+        if (attendees != null && attendees is List) {
+          attendeesLen = attendees.length;
+        } else {
+          attendeesLen = 0;
+        }
+      } else {
+        attendeesLen = 0;
+      }
+    } catch (err) {
+      showSnackBar(
+        context,
+        err.toString(),
+      );
+    }
+    if (mounted) {
+      // Only call setState if the widget is still mounted
+      setState(() {
+        // Update your state here
+      });
+    }
+  }
+
+  deletePost(String eventId) async {
+    try {
+      await FireStoreMethods().deletePost(eventId);
     } catch (err) {
       showSnackBar(
         context,
@@ -134,7 +172,9 @@ class _PostCardState extends State<PostCard> {
                               isGoing
                                   ? Icons.check_circle_sharp
                                   : Icons.add_circle_outlined,
-                              color: isGoing ? Colors.black : Colors.white,
+                              color: isGoing
+                                  ? Colors.black
+                                  : Theme.of(context).iconTheme.color,
                             ),
                             onPressed: () {
                               setState(() {
@@ -143,13 +183,15 @@ class _PostCardState extends State<PostCard> {
                             },
                           ),
                           Text(
-                            interestedLen.toString(),
+                            attendeesLen.toString(),
                             style: const TextStyle(fontSize: 14),
                           ),
                           IconButton(
                             icon: Icon(
                               Icons.star,
-                              color: isInterested ? Colors.black : Colors.white,
+                              color: isInterested
+                                  ? Colors.black
+                                  : Theme.of(context).iconTheme.color,
                             ),
                             onPressed: () {
                               setState(() {
@@ -166,7 +208,7 @@ class _PostCardState extends State<PostCard> {
                             onPressed: () => Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => CommentsScreen(
-                                  eventId: widget.snap['postId'].toString(),
+                                  eventId: widget.snap['eventId'].toString(),
                                 ),
                               ),
                             ),
@@ -281,10 +323,17 @@ class _PostCardState extends State<PostCard> {
                           children: <Widget>[
                             Expanded(
                               child: ElevatedButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   // Handle "Going" button press
+                                  await FireStoreMethods().attendToEvent(
+                                    widget.snap['eventId'],
+                                    FirebaseAuth.instance.currentUser!.uid,
+                                    widget.snap['attendees'],
+                                  );
+
                                   setState(() {
                                     isGoing = !isGoing;
+                                    isGoing ? attendeesLen++ : attendeesLen--;
                                   });
                                 },
                                 style: ElevatedButton.styleFrom(
