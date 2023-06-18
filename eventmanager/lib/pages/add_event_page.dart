@@ -23,7 +23,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return const CreateEventPage();
+                  return Container();
                 },
               ),
             );

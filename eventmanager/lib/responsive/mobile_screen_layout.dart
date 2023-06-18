@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/add_event_page.dart';
+import '../pages/create_event_page.dart';
 import '../pages/home_page.dart';
 import '../pages/profile_page.dart';
 import '../pages/search_page.dart';
@@ -36,6 +37,10 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
     });
   }
 
+  void navigateToHomePage() {
+    pageController.jumpToPage(0); // Go to the home page
+  }
+
   void navigationTapped(int page) {
     //Animating Page
     pageController.jumpToPage(page);
@@ -50,7 +55,9 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         children: <Widget>[
           const HomePage(),
           const SearchScreen(),
-          const AddEventScreen(),
+          CreateEventPage(
+            onEventCreated: navigateToHomePage,
+          ),
           const Text('Upcoming events'),
           ProfilePage(
             uid: FirebaseAuth.instance.currentUser!.uid,

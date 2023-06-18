@@ -131,8 +131,6 @@ class _PostCardState extends State<PostCard> {
 
   @override
   Widget build(BuildContext context) {
-    final model.User user = Provider.of<UserProvider>(context).getUser;
-
     return Container(
       padding: const EdgeInsets.symmetric(vertical: .1),
       child: Column(
@@ -149,7 +147,7 @@ class _PostCardState extends State<PostCard> {
                     child: ClipRRect(
                       child: Image.network(
                         widget.snap['postUrl'].toString(),
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fitHeight,
                       ),
                     ),
                   ),
@@ -413,7 +411,7 @@ class _PostCardState extends State<PostCard> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          height: 60,
+                          height: 114,
                           child: SingleChildScrollView(
                             scrollDirection: Axis.vertical,
                             child: Text(

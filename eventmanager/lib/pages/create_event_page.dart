@@ -11,7 +11,10 @@ import '../resources/firestore_methods.dart';
 import '../utils/utils.dart';
 
 class CreateEventPage extends StatefulWidget {
-  const CreateEventPage({super.key});
+  final VoidCallback onEventCreated;
+
+  const CreateEventPage({Key? key, required this.onEventCreated})
+      : super(key: key);
 
   @override
   State<CreateEventPage> createState() {
@@ -132,6 +135,10 @@ class _CreateEventPageState extends State<CreateEventPage> {
     );
   }
 
+  void handleEventCreated() {
+    widget.onEventCreated();
+  }
+
   void _createEvent() async {
     final UserProvider userProvider =
         Provider.of<UserProvider>(context, listen: false);
@@ -205,7 +212,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              // Optionally, you can navigate to a different page here
+              handleEventCreated();
             },
             child: const Text('OK'),
           ),
