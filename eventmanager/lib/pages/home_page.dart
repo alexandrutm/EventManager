@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:eventmanager/utils/global_variable.dart';
 import 'package:eventmanager/components/post_card.dart';
-import 'settings/settings_page.dart';
+// import 'settings/settings_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

@@ -4,6 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:eventmanager/resources/firestore_methods.dart';
 import 'package:eventmanager/components/follow_button.dart';
+import 'package:intl/intl.dart';
+
+import '../models/event.dart';
 
 class ProfilePage extends StatefulWidget {
   final String uid;
@@ -205,30 +208,78 @@ class _ProfilePageState extends State<ProfilePage> {
                       .collection('events')
                       .where('uid', isEqualTo: widget.uid)
                       .get(),
-                  builder: (context, snapshot) {
+                  builder: (context,
+                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                          snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }
+                    var documents = snapshot.data!.docs;
 
-                    return GridView.builder(
+                    return ListView.builder(
                       shrinkWrap: true,
-                      itemCount: (snapshot.data! as dynamic).docs.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 5,
-                        mainAxisSpacing: 1.5,
-                        childAspectRatio: 1,
-                      ),
+                      itemCount: documents.length,
                       itemBuilder: (context, index) {
-                        DocumentSnapshot snap =
-                            (snapshot.data! as dynamic).docs[index];
+                        DocumentSnapshot snap = documents[index];
+                        Event event = Event.fromSnapshot(snap);
 
-                        return Image(
-                          image: NetworkImage(snap['postUrl']),
-                          fit: BoxFit.cover,
+                        return ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
+                          leading: Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              image: DecorationImage(
+                                image: NetworkImage(event
+                                    .postUrl), // Replace with the appropriate image source
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          title: Text(
+                            event.title,
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 4),
+                              Text(
+                                DateFormat('MMMM d, yyyy')
+                                    .format(event.startDate), // Format the date
+                                style: const TextStyle(
+                                    fontSize: 12, color: Colors.grey),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                event.location,
+                                style: const TextStyle(
+                                    fontSize: 12, color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                          trailing: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CircleAvatar(
+                                radius: 20,
+                                backgroundImage: NetworkImage(event
+                                    .profImage), // Replace with the appropriate image source
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                event.username,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 10, color: Colors.grey),
+                              ),
+                            ],
+                          ),
                         );
                       },
                     );
