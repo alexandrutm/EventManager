@@ -1,4 +1,3 @@
-import 'package:eventmanager/pages/create_event_page.dart';
 import 'package:flutter/material.dart';
 
 class AddEventScreen extends StatefulWidget {

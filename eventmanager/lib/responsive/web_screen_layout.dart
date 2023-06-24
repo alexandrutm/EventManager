@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:eventmanager/utils/colors.dart';
 
-import '../pages/add_event_page.dart';
 import '../pages/create_event_page.dart';
 import '../pages/home_page.dart';
 import '../pages/profile_page.dart';

@@ -3,14 +3,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:eventmanager/models/user.dart' as model;
-import 'package:eventmanager/providers/user_provider.dart';
 import 'package:eventmanager/resources/firestore_methods.dart';
 import 'package:eventmanager/pages/comments_page.dart';
 import 'package:eventmanager/utils/colors.dart';
 import 'package:eventmanager/utils/utils.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class PostCard extends StatefulWidget {
   final dynamic snap;

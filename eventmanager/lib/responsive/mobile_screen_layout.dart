@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../pages/add_event_page.dart';
 import '../pages/create_event_page.dart';
 import '../pages/home_page.dart';
 import '../pages/profile_page.dart';
 import '../pages/search_page.dart';
+import '../pages/upcoming_events.dart';
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({Key? key}) : super(key: key);
@@ -58,7 +58,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           CreateEventPage(
             onEventCreated: navigateToHomePage,
           ),
-          const Text('Upcoming events'),
+          const UpcomingEvents(),
           ProfilePage(
             uid: FirebaseAuth.instance.currentUser!.uid,
           ),

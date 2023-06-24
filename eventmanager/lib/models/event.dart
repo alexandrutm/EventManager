@@ -28,22 +28,23 @@ class Event {
       required this.endDate,
       required this.location});
 
-  static Event fromSnap(DocumentSnapshot snap) {
-    var snapshot = snap.data() as Map<String, dynamic>;
+  static Event fromSnapshot(DocumentSnapshot snapshot) {
+    Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
 
     return Event(
-        title: snapshot["title"],
-        description: snapshot["description"],
-        uid: snapshot["uid"],
-        attendees: snapshot["attendees"],
-        eventId: snapshot["eventId"],
-        datePublished: snapshot["datePublished"],
-        username: snapshot["username"],
-        postUrl: snapshot['postUrl'],
-        profImage: snapshot['profImage'],
-        startDate: snapshot['startDate'],
-        endDate: snapshot['endDate'],
-        location: snapshot['location']);
+      title: data["title"],
+      description: data["description"],
+      uid: data["uid"],
+      attendees: List<String>.from(data["attendees"]),
+      eventId: data["eventId"],
+      datePublished: (data["datePublished"] as Timestamp).toDate(),
+      username: data["username"],
+      postUrl: data['postUrl'],
+      profImage: data['profImage'],
+      startDate: (data['startDate'] as Timestamp).toDate(),
+      endDate: (data['endDate'] as Timestamp).toDate(),
+      location: data['location'],
+    );
   }
 
   Map<String, dynamic> toJson() => {
