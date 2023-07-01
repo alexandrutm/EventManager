@@ -24,14 +24,31 @@ class _UpcomingEvents extends State<UpcomingEvents> {
   }
 
   Future<void> fetchUpcomingEvents() async {
-    var querySnapshot = await FirebaseFirestore.instance
-        .collection('events')
-        .where('attendees',
-            arrayContains: FirebaseAuth.instance.currentUser!.uid)
-        .get();
+    var currentUserUid = FirebaseAuth.instance.currentUser!.uid;
+    var eventsRef = FirebaseFirestore.instance.collection('events');
 
-    List<Event> events =
-        querySnapshot.docs.map((doc) => Event.fromSnapshot(doc)).toList();
+    var createdEventsQuerySnapshot =
+        await eventsRef.where('uid', isEqualTo: currentUserUid).get();
+
+    var attendedEventsQuerySnapshot =
+        await eventsRef.where('attendees', arrayContains: currentUserUid).get();
+
+    List<Event> createdEvents = createdEventsQuerySnapshot.docs
+        .map((doc) => Event.fromSnapshot(doc))
+        .toList();
+    List<Event> attendedEvents = attendedEventsQuerySnapshot.docs
+        .map((doc) => Event.fromSnapshot(doc))
+        .toList();
+
+    List<Event> allEvents = [...createdEvents, ...attendedEvents];
+
+    // Delete duplicate
+    List<Event> events = [];
+    allEvents.forEach((event) {
+      if (!events.any((e) => e.eventId == event.eventId)) {
+        events.add(event);
+      }
+    });
 
     // Filter out past events
     DateTime currentDate = DateTime.now();
@@ -48,64 +65,69 @@ class _UpcomingEvents extends State<UpcomingEvents> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: upcomingEvents.length,
-      itemBuilder: (BuildContext context, int index) {
-        Event event = upcomingEvents[index];
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Upcoming Events'),
+      ),
+      body: ListView.builder(
+        itemCount: upcomingEvents.length,
+        itemBuilder: (BuildContext context, int index) {
+          Event event = upcomingEvents[index];
 
-        return ListTile(
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          leading: Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              image: DecorationImage(
-                image: NetworkImage(
-                    event.postUrl), // Replace with the appropriate image source
-                fit: BoxFit.cover,
+          return ListTile(
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            leading: Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                image: DecorationImage(
+                  image: NetworkImage(event
+                      .postUrl), // Replace with the appropriate image source
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          title: Text(
-            event.title,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 4),
-              Text(
-                DateFormat('MMMM d, yyyy')
-                    .format(event.startDate), // Format the date
-                style: const TextStyle(fontSize: 12, color: Colors.grey),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                event.location,
-                style: const TextStyle(fontSize: 12, color: Colors.grey),
-              ),
-            ],
-          ),
-          trailing: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                radius: 20,
-                backgroundImage: NetworkImage(event
-                    .profImage), // Replace with the appropriate image source
-              ),
-              const SizedBox(height: 4),
-              Text(
-                event.username,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 10, color: Colors.grey),
-              ),
-            ],
-          ),
-        );
-      },
+            title: Text(
+              event.title,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 4),
+                Text(
+                  DateFormat('MMMM d, yyyy')
+                      .format(event.startDate), // Format the date
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  event.location,
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ],
+            ),
+            trailing: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 20,
+                  backgroundImage: NetworkImage(event
+                      .profImage), // Replace with the appropriate image source
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  event.username,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 10, color: Colors.grey),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }
