@@ -115,24 +115,35 @@ class AuthMethods {
         firebaseUser = await auth.signInWithPopup(authProvider);
 
         List<String> spiltName = firebaseUser.user!.displayName!.split(" ");
+        String email = firebaseUser.user!.email.toString();
 
-        model.User user = model.User(
-          mFirstName: spiltName.first,
-          mLastName: spiltName.last,
-          uid: firebaseUser.user!.uid,
-          photoUrl: firebaseUser.user!.photoURL.toString(),
-          email: firebaseUser.user!.email.toString(),
-          bio: "",
-          followers: [],
-          following: [],
-        );
-
-        // adding user in our database
-        await _firestore
+        // Verificăm dacă utilizatorul există deja în baza de date
+        var userSnapshot = await FirebaseFirestore.instance
             .collection("users")
-            .doc(firebaseUser.user!.uid)
-            .set(user.toJson());
-        return "success";
+            .where("email", isEqualTo: email)
+            .get();
+
+        if (userSnapshot.docs.isNotEmpty) {
+          // Utilizatorul există deja
+          return "success";
+        } else {
+          model.User user = model.User(
+            mFirstName: spiltName.first,
+            mLastName: spiltName.last,
+            uid: firebaseUser.user!.uid,
+            photoUrl: firebaseUser.user!.photoURL.toString(),
+            email: firebaseUser.user!.email.toString(),
+            bio: "",
+            followers: [],
+            following: [],
+          );
+          // adding user in our database
+          await _firestore
+              .collection("users")
+              .doc(firebaseUser.user!.uid)
+              .set(user.toJson());
+          return "success";
+        }
       } catch (e) {
         //print(e);
       }
@@ -156,24 +167,37 @@ class AuthMethods {
 
           List<String> spiltName = firebaseUser.user!.displayName!.split(" ");
 
-          model.User user = model.User(
-            mFirstName: spiltName.first,
-            mLastName: spiltName.last,
-            uid: firebaseUser.user!.uid,
-            photoUrl: firebaseUser.user!.photoURL.toString(),
-            email: firebaseUser.user!.email.toString(),
-            bio: "",
-            followers: [],
-            following: [],
-          );
+          String email = firebaseUser.user!.email.toString();
 
-          // adding user in our database
-          await _firestore
+          // Verificăm dacă utilizatorul există deja în baza de date
+          var userSnapshot = await FirebaseFirestore.instance
               .collection("users")
-              .doc(firebaseUser.user!.uid)
-              .set(user.toJson());
+              .where("email", isEqualTo: email)
+              .get();
 
-          return "success";
+          if (userSnapshot.docs.isNotEmpty) {
+            // Utilizatorul există deja
+            return "success";
+          } else {
+            model.User user = model.User(
+              mFirstName: spiltName.first,
+              mLastName: spiltName.last,
+              uid: firebaseUser.user!.uid,
+              photoUrl: firebaseUser.user!.photoURL.toString(),
+              email: firebaseUser.user!.email.toString(),
+              bio: "",
+              followers: [],
+              following: [],
+            );
+
+            // adding user in our database
+            await _firestore
+                .collection("users")
+                .doc(firebaseUser.user!.uid)
+                .set(user.toJson());
+
+            return "success";
+          }
         } on FirebaseAuthException catch (e) {
           if (e.code == 'account-exists-with-different-credential') {
             // ...
