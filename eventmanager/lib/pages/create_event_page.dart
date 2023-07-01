@@ -37,6 +37,40 @@ class _CreateEventPageState extends State<CreateEventPage> {
   bool isLoading = false;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Create New Event'),
+            content: const Text('Do you want to proceed with event creation?'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+
+                  // Navigate back to the previous page or home page
+                  //
+                  //here
+                },
+              ),
+              TextButton(
+                child: const Text('Create'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    });
+  }
+
+  @override
   void dispose() {
     _titleController.dispose();
     _descriptionController.dispose();
@@ -199,10 +233,6 @@ class _CreateEventPageState extends State<CreateEventPage> {
         err.toString(),
       );
     }
-
-    // Implement your logic here to create the event
-    // Example: eventService.createEvent(title, description, eventStartTime, eventEndTime, _imageFile);
-
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -309,7 +339,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                     controller: _locationController,
                     decoration: const InputDecoration(
                       hintText: 'Enter a location',
-                      suffixIcon: Icon(Icons.search),
+                      suffixIcon: Icon(Icons.place),
                     ),
                   ),
                 ],
