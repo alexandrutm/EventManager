@@ -282,55 +282,41 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ),
                                     ],
                                   ),
-                                  trailing: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      CircleAvatar(
-                                        radius: 20,
-                                        backgroundImage:
-                                            NetworkImage(event.profImage),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        event.username,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                            fontSize: 10, color: Colors.grey),
-                                      ),
-                                    ],
-                                  ),
                                 ),
                               ),
                               // 3 points menu button
-                              PopupMenuButton<String>(
-                                onSelected: (value) {
-                                  // Handle the action based on the selected value
-                                  if (value == 'edit') {
-                                    // Edit the event
-                                  } else if (value == 'delete') {
-                                    // Delete the event
-                                    try {
-                                      deleteEvent(event.eventId);
-                                    } catch (err) {
-                                      // showSnackBar(
-                                      //   context,
-                                      //   err.toString(),
-                                      // );
+                              Transform.scale(
+                                scale: 1.5,
+                                child: PopupMenuButton<String>(
+                                  onSelected: (value) {
+                                    // Handle the action based on the selected value
+                                    if (value == 'edit') {
+                                      // Edit the event
+                                    } else if (value == 'delete') {
+                                      // Delete the event
+                                      try {
+                                        deleteEvent(event.eventId);
+                                      } catch (err) {
+                                        // showSnackBar(
+                                        //   context,
+                                        //   err.toString(),
+                                        // );
+                                      }
                                     }
-                                  }
-                                },
-                                itemBuilder: (BuildContext context) {
-                                  return [
-                                    const PopupMenuItem<String>(
-                                      value: 'edit',
-                                      child: Text('Edit'),
-                                    ),
-                                    const PopupMenuItem<String>(
-                                      value: 'delete',
-                                      child: Text('Delete'),
-                                    ),
-                                  ];
-                                },
+                                  },
+                                  itemBuilder: (BuildContext context) {
+                                    return [
+                                      const PopupMenuItem<String>(
+                                        value: 'edit',
+                                        child: Text('Edit'),
+                                      ),
+                                      const PopupMenuItem<String>(
+                                        value: 'delete',
+                                        child: Text('Delete'),
+                                      ),
+                                    ];
+                                  },
+                                ),
                               ),
                             ],
                           ),
