@@ -60,7 +60,10 @@ class _HomePageState extends State<HomePage> {
       //         // ],
       //       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('events').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('events')
+            .orderBy('datePublished', descending: true)
+            .snapshots(),
         builder: (context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
