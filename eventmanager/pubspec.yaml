@@ -82,8 +82,8 @@ flutter:
     - assets/ic_eventmanager.svg
     - assets/eventmanager.png
     - assets/google.png
-    - assets/noImage_thumbnail.png
-    - assets/noImage.jpg
+    - assets/avatar.jpg
+    - assets/avatar.jpg
     - assets/RateAppEmoji.json
   #   - images/a_dot_ham.jpeg
 

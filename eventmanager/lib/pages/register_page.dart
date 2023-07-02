@@ -44,9 +44,8 @@ class _SignupScreenState extends State<SignupScreen> {
       _isLoading = true;
     });
 
-    _image ??= (await rootBundle.load('assets/noImage_thumbnail.png'))
-        .buffer
-        .asUint8List();
+    _image ??=
+        (await rootBundle.load('assets/avatar.jpg')).buffer.asUint8List();
 
     // signup user using our authmethodds
     String res = await AuthMethods().registerUser(
@@ -129,8 +128,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             )
                           : const CircleAvatar(
                               radius: 64,
-                              backgroundImage:
-                                  AssetImage('assets/noImage_thumbnail.png'),
+                              backgroundImage: AssetImage('assets/avatar.jpg'),
                               backgroundColor:
                                   Color.fromARGB(255, 163, 149, 244),
                             ),
