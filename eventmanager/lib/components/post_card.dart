@@ -115,17 +115,6 @@ class _PostCardState extends State<PostCard> {
     }
   }
 
-  deletePost(String eventId) async {
-    try {
-      await FireStoreMethods().deletePost(eventId);
-    } catch (err) {
-      showSnackBar(
-        context,
-        err.toString(),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
