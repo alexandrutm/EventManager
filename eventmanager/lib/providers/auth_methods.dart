@@ -25,7 +25,8 @@ class AuthMethods {
         uid: "",
         email: "",
         followers: [],
-        following: []);
+        following: [],
+        mFullName: []);
   }
 
   // Signing Up User
@@ -58,6 +59,7 @@ class AuthMethods {
           bio: bio,
           followers: [],
           following: [],
+          mFullName: [firstname, lastname],
         );
 
         // adding user in our database
@@ -136,6 +138,7 @@ class AuthMethods {
             bio: "",
             followers: [],
             following: [],
+            mFullName: [spiltName.first, spiltName.last],
           );
           // adding user in our database
           await _firestore
@@ -188,6 +191,7 @@ class AuthMethods {
               bio: "",
               followers: [],
               following: [],
+              mFullName: [spiltName.first, spiltName.last],
             );
 
             // adding user in our database

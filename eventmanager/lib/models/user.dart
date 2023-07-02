@@ -9,6 +9,7 @@ class User {
   final String bio;
   final List followers;
   final List following;
+  final List mFullName;
 
   const User(
       {required this.mFirstName,
@@ -18,7 +19,8 @@ class User {
       this.photoUrl = 'https://i.stack.imgur.com/34AD2.jpg',
       this.bio = "About you",
       required this.followers,
-      required this.following});
+      required this.following,
+      required this.mFullName});
 
   static User fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
@@ -32,6 +34,7 @@ class User {
       bio: snapshot["bio"],
       followers: snapshot["followers"],
       following: snapshot["following"],
+      mFullName: snapshot["fullname"],
     );
   }
 
@@ -44,5 +47,6 @@ class User {
         "bio": bio,
         "followers": followers,
         "following": following,
+        "fullname": mFullName,
       };
 }
