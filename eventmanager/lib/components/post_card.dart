@@ -127,14 +127,13 @@ class _PostCardState extends State<PostCard> {
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.55,
-                    width: double.infinity,
-                    child: ClipRRect(
-                      child: Image.network(
                         widget.snap['postUrl'].toString(),
-                        fit: BoxFit.fitHeight,
-                      ),
+                  Center(
+                    child: Image.network(
+                      widget.snap['postUrl'].toString(),
+                      height: 400,
+                      width: 400,
+                      fit: BoxFit.cover,
                     ),
                   ),
                   Positioned(
@@ -151,55 +150,36 @@ class _PostCardState extends State<PostCard> {
                       ),
                       child: Column(
                         children: <Widget>[
-                          IconButton(
-                            icon: Icon(
-                              isGoing
-                                  ? Icons.check_circle_sharp
-                                  : Icons.add_circle_outlined,
-                              color: isGoing
-                                  ? Colors.black
-                                  : Theme.of(context).iconTheme.color,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                isGoing = !isGoing;
-                              });
-                            },
-                          ),
-                          Text(
-                            attendeesLen.toString(),
-                            style: const TextStyle(fontSize: 14),
-                          ),
-                          IconButton(
-                            icon: Icon(
-                              Icons.star,
-                              color: isInterested
-                                  ? Colors.black
-                                  : Theme.of(context).iconTheme.color,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                isInterested = !isInterested;
-                              });
-                            },
-                          ),
-                          Text(
-                            interestedLen.toString(),
-                            style: const TextStyle(fontSize: 14),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.comment_rounded),
-                            onPressed: () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => CommentsScreen(
-                                  eventId: widget.snap['eventId'].toString(),
+                          Stack(
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.comment_rounded),
+                                onPressed: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => CommentsScreen(
+                                      eventId:
+                                          widget.snap['eventId'].toString(),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                          Text(
-                            commentLen.toString(),
-                            style: const TextStyle(fontSize: 14),
+                              Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: Transform.translate(
+                                  offset: Offset(-1, 1),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(2),
+                                    child: Text(
+                                      commentLen.toString(),
+                                      style: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           IconButton(
                             icon: const Icon(Icons.share),
@@ -340,8 +320,10 @@ class _PostCardState extends State<PostCard> {
                                     ),
                                     const SizedBox(width: 2),
                                     Text(
-                                      'Going',
+                                      'Going (${attendeesLen.toString()})', // Include the attendee number here
                                       style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
                                         color: isGoing
                                             ? Colors.black
                                             : Colors.white,
@@ -393,19 +375,19 @@ class _PostCardState extends State<PostCard> {
                           ],
                         ),
 
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          height: 114,
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Text(
-                              widget.snap['description'].toString(),
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                          ),
-                        ),
+                        // Container(
+                        //   decoration: BoxDecoration(
+                        //     borderRadius: BorderRadius.circular(8),
+                        //   ),
+                        //   height: 114,
+                        //   child: SingleChildScrollView(
+                        //     scrollDirection: Axis.vertical,
+                        //     child: Text(
+                        //       widget.snap['description'].toString(),
+                        //       style: const TextStyle(fontSize: 16),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
