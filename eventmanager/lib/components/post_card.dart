@@ -127,13 +127,15 @@ class _PostCardState extends State<PostCard> {
               Stack(
                 alignment: Alignment.center,
                 children: [
+                  Container(
+                    color: Colors.grey.shade400,
+                    height: MediaQuery.of(context).size.height * 0.50,
+                    width: double.infinity,
+                    child: ClipRRect(
+                      child: Image.network(
                         widget.snap['postUrl'].toString(),
-                  Center(
-                    child: Image.network(
-                      widget.snap['postUrl'].toString(),
-                      height: 400,
-                      width: 400,
-                      fit: BoxFit.cover,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   Positioned(
@@ -215,10 +217,12 @@ class _PostCardState extends State<PostCard> {
                         //Event host
                         Row(
                           children: <Widget>[
-                            Icon(Icons.account_circle),
-                            const SizedBox(
-                              width: 4,
+                            CircleAvatar(
+                              radius: 20,
+                              backgroundImage:
+                                  NetworkImage(widget.snap['profImage']),
                             ),
+                            const SizedBox(width: 8),
                             Expanded(
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,

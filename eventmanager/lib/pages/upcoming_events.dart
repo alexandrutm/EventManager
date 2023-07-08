@@ -114,8 +114,7 @@ class _UpcomingEvents extends State<UpcomingEvents> {
               children: [
                 CircleAvatar(
                   radius: 20,
-                  backgroundImage: NetworkImage(event
-                      .profImage), // Replace with the appropriate image source
+                  backgroundImage: NetworkImage(event.profImage),
                 ),
                 const SizedBox(height: 4),
                 Text(
