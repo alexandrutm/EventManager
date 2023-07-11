@@ -1,5 +1,8 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 
+import 'dart:async';
+
+import 'package:animated_check/animated_check.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,17 +23,29 @@ class PostCard extends StatefulWidget {
   State<PostCard> createState() => _PostCardState();
 }
 
-class _PostCardState extends State<PostCard> {
+class _PostCardState extends State<PostCard>
+    with SingleTickerProviderStateMixin {
   int commentLen = 0;
   int interestedLen = 0;
   int attendeesLen = 0;
-  bool isLikeAnimating = false;
+  //bool isLikeAnimating = false;
   bool isGoing = false; // Set this value based on user's selection
   bool isInterested = false; // Set this value based on user's selection
+
+  //animation check
+  late AnimationController _animationController;
+  late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
+
+    _animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOutCirc,
+    ));
 
     if (widget.snap['attendees']
         .contains(FirebaseAuth.instance.currentUser!.uid)) isGoing = true;
@@ -115,6 +130,26 @@ class _PostCardState extends State<PostCard> {
     }
   }
 
+  void _showCheck() {
+    _animationController.forward().then((_) {
+      Future.delayed(Duration(milliseconds: 200), () {
+        if (_animationController.status == AnimationStatus.completed) {
+          _animationController.reset();
+        }
+      });
+    });
+  }
+
+  // void _resetCheck() {
+  //   _animationController.fling();
+  // }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -127,16 +162,26 @@ class _PostCardState extends State<PostCard> {
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  Container(
-                    color: Colors.grey.shade400,
-                    height: MediaQuery.of(context).size.height * 0.50,
-                    width: double.infinity,
-                    child: ClipRRect(
-                      child: Image.network(
-                        widget.snap['postUrl'].toString(),
-                        fit: BoxFit.cover,
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        color: Colors.grey.shade400,
+                        height: MediaQuery.of(context).size.height * 0.50,
+                        width: double.infinity,
+                        child: ClipRRect(
+                          child: Image.network(
+                            widget.snap['postUrl'].toString(),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
-                    ),
+                      AnimatedCheck(
+                        progress: _animation,
+                        size: 300,
+                        color: Colors.grey.shade500,
+                      ),
+                    ],
                   ),
                   Positioned(
                     bottom: 0,
