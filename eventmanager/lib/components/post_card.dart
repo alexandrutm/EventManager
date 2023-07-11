@@ -192,8 +192,8 @@ class _PostCardState extends State<PostCard>
                           topLeft: Radius.circular(8),
                         ),
                         color: Theme.of(context).brightness == Brightness.light
-                            ? lightBkgColor // Set black color for light theme
-                            : darkBkgColor, // Set white color for dark theme
+                            ? lightBkgColor
+                            : darkBkgColor,
                       ),
                       child: Column(
                         children: <Widget>[
@@ -251,48 +251,84 @@ class _PostCardState extends State<PostCard>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         const SizedBox(height: 8),
-                        Text(
-                          widget.snap['title'].toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        //Event host
-                        Row(
-                          children: <Widget>[
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundImage:
-                                  NetworkImage(widget.snap['profImage']),
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    widget.snap['username'].toString(),
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18),
+                        Row(children: [
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: EdgeInsets.all(8),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  widget.snap['title'].toString(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 25,
                                   ),
-                                ],
+                                ),
                               ),
                             ),
-                          ],
+                          )
+                        ]),
+                        const SizedBox(height: 5),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: EdgeInsets.all(8),
+                          child: Row(
+                            children: <Widget>[
+                              CircleAvatar(
+                                radius: 20,
+                                backgroundImage:
+                                    NetworkImage(widget.snap['profImage']),
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      widget.snap['username'].toString(),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
+
                         const SizedBox(height: 5),
                         //Location
                         Row(
-                          children: <Widget>[
-                            Icon(Icons.place),
-                            const SizedBox(width: 4),
-                            Text(
-                              widget.snap['location'].toString(),
-                              style: const TextStyle(fontSize: 16),
+                          children: [
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                padding: EdgeInsets.all(8),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.place),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        widget.snap['location'].toString(),
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
+                                    ]),
+                              ),
                             ),
                           ],
                         ),
@@ -394,6 +430,10 @@ class _PostCardState extends State<PostCard>
                                       isGoing
                                           ? Icons.check_circle_sharp
                                           : Icons.add_circle_outlined,
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? Colors.black
+                                          : Colors.white,
                                     ),
                                     const SizedBox(width: 2),
                                     Text(
@@ -401,6 +441,10 @@ class _PostCardState extends State<PostCard>
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
+                                        color: Theme.of(context).brightness ==
+                                                Brightness.light
+                                            ? Colors.black
+                                            : Colors.white,
                                       ),
                                     ),
                                   ],

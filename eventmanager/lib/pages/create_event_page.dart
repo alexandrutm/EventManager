@@ -29,10 +29,11 @@ class _CreateEventPageState extends State<CreateEventPage> {
   DateTime _selectedStartDate = DateTime.now();
   DateTime _selectedEndDate = DateTime.now();
   TimeOfDay _selectedStartTime = TimeOfDay.now();
-  TimeOfDay _selectedEndTime = TimeOfDay.now().replacing(
-    hour: TimeOfDay.now().hour + 1,
-    minute: TimeOfDay.now().minute,
-  );
+  DateTime currentTime = DateTime.now();
+  DateTime oneHourLater = DateTime.now().add(const Duration(hours: 1));
+  TimeOfDay _selectedEndTime =
+      TimeOfDay.fromDateTime(DateTime.now().add(const Duration(hours: 1)));
+
   Uint8List? _imageFile;
   bool isLoading = false;
 
@@ -349,6 +350,12 @@ class _CreateEventPageState extends State<CreateEventPage> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
               onPressed: _createEvent,
               child: const Text('Create Event'),
             ),
