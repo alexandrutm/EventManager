@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.18"
+  animated_check:
+    dependency: "direct main"
+    description:
+      name: animated_check
+      sha256: "1da103a44b6aeacbecec799343b7170e627f4af465ca642b430c1d94922868aa"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
   archive:
     dependency: transitive
     description:
@@ -230,6 +238,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.0"
+  flutter_icons:
+    dependency: "direct main"
+    description:
+      name: flutter_icons
+      sha256: ad1c830f729c71216372d1a8d62c08c6dd792227d9492d5130aea5e391210a9f
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   flutter_lints:
     dependency: "direct dev"
     description:

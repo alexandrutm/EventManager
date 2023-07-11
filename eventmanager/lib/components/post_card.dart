@@ -284,7 +284,7 @@ class _PostCardState extends State<PostCard>
                             ),
                           ],
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 5),
                         //Location
                         Row(
                           children: <Widget>[
@@ -296,42 +296,71 @@ class _PostCardState extends State<PostCard>
                             ),
                           ],
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 5),
                         //Date and time
                         Row(
-                          children: <Widget>[
+                          children: [
                             Expanded(
-                              child: Row(
-                                children: <Widget>[
-                                  Icon(Icons.date_range),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    DateFormat.yMMMd().format(
-                                      widget.snap['startDate'].toDate(),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                padding: EdgeInsets.all(8),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    _buildDateTimeRow(
+                                      icon: Icons.date_range,
+                                      text: DateFormat.yMMMd().format(
+                                          widget.snap['startDate'].toDate()),
+                                      textAlign: TextAlign.center,
                                     ),
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                                ],
+                                    _buildDateTimeRow(
+                                      icon: Icons.access_time,
+                                      text: DateFormat.jm().format(
+                                          widget.snap['startDate'].toDate()),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(Icons.access_time),
-                                const SizedBox(width: 4),
-                                Text(
-                                  DateFormat.jm().format(
-                                    widget.snap['startDate'].toDate(),
-                                  ),
-                                  style: const TextStyle(fontSize: 16),
+                            _buildArrowIcon(),
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ],
+                                padding: EdgeInsets.all(8),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      _buildDateTimeRow(
+                                        icon: Icons.date_range,
+                                        text: DateFormat.yMMMd().format(
+                                            widget.snap['endDate'].toDate()),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      _buildDateTimeRow(
+                                        icon: Icons.access_time,
+                                        text: DateFormat.jm().format(
+                                            widget.snap['endDate'].toDate()),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
-                            const SizedBox(width: 15)
                           ],
                         ),
-                        const SizedBox(height: 8),
-                        //Going/Interested button
+                        const SizedBox(height: 1),
+                        //Going button
                         Row(
                           children: <Widget>[
                             Expanded(
@@ -347,6 +376,7 @@ class _PostCardState extends State<PostCard>
                                   setState(() {
                                     isGoing = !isGoing;
                                     isGoing ? attendeesLen++ : attendeesLen--;
+                                    isGoing ? _showCheck() : 0;
                                   });
                                 },
                                 style: ElevatedButton.styleFrom(
@@ -364,79 +394,21 @@ class _PostCardState extends State<PostCard>
                                       isGoing
                                           ? Icons.check_circle_sharp
                                           : Icons.add_circle_outlined,
-                                      color:
-                                          isGoing ? Colors.black : Colors.white,
                                     ),
                                     const SizedBox(width: 2),
                                     Text(
-                                      'Going (${attendeesLen.toString()})', // Include the attendee number here
+                                      'Going (${attendeesLen.toString()})',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
-                                        color: isGoing
-                                            ? Colors.black
-                                            : Colors.white,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                // Handle "Interested" button press
-                                setState(() {
-                                  isInterested = !isInterested;
-                                });
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: isInterested
-                                    ? Colors.grey.shade400
-                                    : Colors.orange,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.star,
-                                    color: isInterested
-                                        ? Colors.black
-                                        : Colors.white,
-                                  ),
-                                  const SizedBox(width: 2),
-                                  Text(
-                                    'Interested',
-                                    style: TextStyle(
-                                      color: isInterested
-                                          ? Colors.black
-                                          : Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                           ],
                         ),
-
-                        // Container(
-                        //   decoration: BoxDecoration(
-                        //     borderRadius: BorderRadius.circular(8),
-                        //   ),
-                        //   height: 114,
-                        //   child: SingleChildScrollView(
-                        //     scrollDirection: Axis.vertical,
-                        //     child: Text(
-                        //       widget.snap['description'].toString(),
-                        //       style: const TextStyle(fontSize: 16),
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
@@ -445,6 +417,35 @@ class _PostCardState extends State<PostCard>
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildDateTimeRow({
+    required IconData icon,
+    required String text,
+    TextAlign textAlign = TextAlign.start,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon),
+        const SizedBox(width: 2),
+        Text(
+          text,
+          textAlign: textAlign,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildArrowIcon() {
+    return Container(
+      width: 40,
+      child: Icon(
+        Icons.arrow_right_alt,
+        size: 24,
       ),
     );
   }
