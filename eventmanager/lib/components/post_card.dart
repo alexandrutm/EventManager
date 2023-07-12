@@ -167,7 +167,7 @@ class _PostCardState extends State<PostCard>
                     children: [
                       Container(
                         color: Colors.grey.shade400,
-                        height: MediaQuery.of(context).size.height * 0.50,
+                        height: MediaQuery.of(context).size.height * 0.60,
                         width: double.infinity,
                         child: ClipRRect(
                           child: Image.network(
@@ -220,7 +220,7 @@ class _PostCardState extends State<PostCard>
                                     child: Text(
                                       commentLen.toString(),
                                       style: const TextStyle(
-                                          fontSize: 12,
+                                          fontSize: 14,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
@@ -240,225 +240,252 @@ class _PostCardState extends State<PostCard>
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const SizedBox(height: 8),
-                        Row(children: [
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.green,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              padding: EdgeInsets.all(8),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  widget.snap['title'].toString(),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 25,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                        ]),
-                        const SizedBox(height: 5),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          padding: EdgeInsets.all(8),
-                          child: Row(
-                            children: <Widget>[
-                              CircleAvatar(
-                                radius: 20,
-                                backgroundImage:
-                                    NetworkImage(widget.snap['profImage']),
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      widget.snap['username'].toString(),
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        const SizedBox(height: 5),
-                        //Location
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                padding: EdgeInsets.all(8),
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.place),
-                                      const SizedBox(width: 4),
-                                      Text(
-                                        widget.snap['location'].toString(),
-                                        style: const TextStyle(fontSize: 16),
-                                      ),
-                                    ]),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 5),
-                        //Date and time
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                padding: EdgeInsets.all(8),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    _buildDateTimeRow(
-                                      icon: Icons.date_range,
-                                      text: DateFormat.yMMMd().format(
-                                          widget.snap['startDate'].toDate()),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    _buildDateTimeRow(
-                                      icon: Icons.access_time,
-                                      text: DateFormat.jm().format(
-                                          widget.snap['startDate'].toDate()),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            _buildArrowIcon(),
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                padding: EdgeInsets.all(8),
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      _buildDateTimeRow(
-                                        icon: Icons.date_range,
-                                        text: DateFormat.yMMMd().format(
-                                            widget.snap['endDate'].toDate()),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      _buildDateTimeRow(
-                                        icon: Icons.access_time,
-                                        text: DateFormat.jm().format(
-                                            widget.snap['endDate'].toDate()),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 1),
-                        //Going button
-                        Row(
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 6.0, right: 6.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Expanded(
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  // Handle "Going" button press
-                                  await FireStoreMethods().attendToEvent(
-                                    widget.snap['eventId'],
-                                    FirebaseAuth.instance.currentUser!.uid,
-                                    widget.snap['attendees'],
-                                  );
-
-                                  setState(() {
-                                    isGoing = !isGoing;
-                                    isGoing ? attendeesLen++ : attendeesLen--;
-                                    isGoing ? _showCheck() : 0;
-                                  });
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: isGoing
-                                      ? Colors.grey.shade500
-                                      : Colors.green,
-                                  shape: RoundedRectangleBorder(
+                            const SizedBox(height: 8),
+                            Row(children: [
+                              Expanded(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue.shade300,
                                     borderRadius: BorderRadius.circular(8),
                                   ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      isGoing
-                                          ? Icons.check_circle_sharp
-                                          : Icons.add_circle_outlined,
-                                      color: Theme.of(context).brightness ==
-                                              Brightness.light
-                                          ? Colors.black
-                                          : Colors.white,
-                                    ),
-                                    const SizedBox(width: 2),
-                                    Text(
-                                      'Going (${attendeesLen.toString()})',
+                                  padding: EdgeInsets.all(8),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      widget.snap['title'].toString(),
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                        color: Theme.of(context).brightness ==
-                                                Brightness.light
-                                            ? Colors.black
-                                            : Colors.white,
+                                        fontSize: 24,
                                       ),
                                     ),
-                                  ],
+                                  ),
                                 ),
+                              )
+                            ]),
+                            const SizedBox(height: 6),
+                            //username
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.blue.shade300,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      padding: EdgeInsets.all(8),
+                                      child: Row(
+                                        children: <Widget>[
+                                          CircleAvatar(
+                                            radius: 18,
+                                            backgroundImage: NetworkImage(
+                                                widget.snap['profImage']),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Expanded(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Text(
+                                                  widget.snap['username']
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Flexible(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.blue.shade400,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      padding: EdgeInsets.all(8),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.place),
+                                          const SizedBox(width: 4),
+                                          Expanded(
+                                            child: Text(
+                                              widget.snap['location']
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
+
+                            const SizedBox(height: 8),
+                            //Date and time
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue.shade300,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    padding: EdgeInsets.all(8),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        _buildDateTimeRow(
+                                          icon: Icons.date_range,
+                                          text: DateFormat.yMMMd().format(widget
+                                              .snap['startDate']
+                                              .toDate()),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        _buildDateTimeRow(
+                                          icon: Icons.access_time,
+                                          text: DateFormat.jm().format(widget
+                                              .snap['startDate']
+                                              .toDate()),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                _buildArrowIcon(),
+                                Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue.shade300,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    padding: EdgeInsets.all(8),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          _buildDateTimeRow(
+                                            icon: Icons.date_range,
+                                            text: DateFormat.yMMMd().format(
+                                                widget.snap['endDate']
+                                                    .toDate()),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          _buildDateTimeRow(
+                                            icon: Icons.access_time,
+                                            text: DateFormat.jm().format(widget
+                                                .snap['endDate']
+                                                .toDate()),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: 8),
                           ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          //Going button
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 6.0, right: 6.0),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      // Handle "Going" button press
+                      await FireStoreMethods().attendToEvent(
+                        widget.snap['eventId'],
+                        FirebaseAuth.instance.currentUser!.uid,
+                        widget.snap['attendees'],
+                      );
+
+                      setState(() {
+                        isGoing = !isGoing;
+                        isGoing ? attendeesLen++ : attendeesLen--;
+                        isGoing ? _showCheck() : 0;
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          isGoing ? Colors.grey.shade500 : Colors.green,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          isGoing
+                              ? Icons.check_circle_sharp
+                              : Icons.add_circle_outlined,
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Colors.black
+                                  : Colors.white,
+                        ),
+                        const SizedBox(width: 2),
+                        Text(
+                          'Going (${attendeesLen.toString()})',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.black
+                                    : Colors.white,
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
