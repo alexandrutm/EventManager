@@ -274,6 +274,87 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                   ),
+                  // // sign in with Facebook button
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 10),
+                  //   child: _isFacebookSigningIn
+                  //       ? const CircularProgressIndicator(
+                  //           valueColor:
+                  //               AlwaysStoppedAnimation<Color>(fillColor),
+                  //         )
+                  //       : OutlinedButton(
+                  //           style: ButtonStyle(
+                  //             backgroundColor:
+                  //                 MaterialStateProperty.all(fillColor),
+                  //             shape: MaterialStateProperty.all(
+                  //               RoundedRectangleBorder(
+                  //                 borderRadius: BorderRadius.circular(20),
+                  //               ),
+                  //             ),
+                  //           ),
+                  //           onPressed: () async {
+                  //             setState(() {
+                  //               _isFacebookSigningIn = true;
+                  //             });
+
+                  //             String? res =
+                  //                 await AuthMethods().signInWithFacebook();
+
+                  //             // if string returned is success, user has been created
+                  //             if (res == "success") {
+                  //               // navigate to the home screen
+                  //               if (context.mounted) {
+                  //                 Navigator.of(context).pushReplacement(
+                  //                   MaterialPageRoute(
+                  //                     builder: (context) =>
+                  //                         const ResponsiveLayout(
+                  //                       mobileScreenLayout:
+                  //                           MobileScreenLayout(),
+                  //                       webScreenLayout: WebScreenLayout(),
+                  //                     ),
+                  //                   ),
+                  //                 );
+                  //               }
+                  //             } else {
+                  //               // show the error
+                  //               // showSnackBar(context, res);
+                  //             }
+
+                  //             if (context.mounted) {
+                  //               setState(() {
+                  //                 _isFacebookSigningIn = false;
+                  //               });
+                  //             }
+                  //           },
+                  //           child: Container(
+                  //             padding: const EdgeInsets.all(15),
+                  //             margin:
+                  //                 const EdgeInsets.symmetric(horizontal: 30),
+                  //             child: Row(
+                  //               mainAxisSize: MainAxisSize.min,
+                  //               mainAxisAlignment: MainAxisAlignment.center,
+                  //               children: const <Widget>[
+                  //                 Image(
+                  //                   image:
+                  //                       AssetImage("assets/facebooklogin.png"),
+                  //                   height: 30,
+                  //                 ),
+                  //                 Padding(
+                  //                   padding: EdgeInsets.only(left: 10),
+                  //                   child: Text(
+                  //                     'Sign in with Facebook',
+                  //                     style: TextStyle(
+                  //                       fontSize: 20,
+                  //                       color: primaryColorBlack,
+                  //                       fontWeight: FontWeight.w600,
+                  //                     ),
+                  //                   ),
+                  //                 )
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         ),
+                  // ),
                   // not a member? register now
                   Expanded(
                     child: Align(
